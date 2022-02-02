@@ -1,5 +1,14 @@
 package frc.robot.subsystems;
 
-public class ManagementSubsystem {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class ManagementSubsystem extends SubsystemBase{
+
+    public ManagementSubsystem() {}
+
+    @Override
+    public void periodic() {
+      // This method will be called once per scheduler run
+    }
     
 }
