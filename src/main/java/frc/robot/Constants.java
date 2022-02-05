@@ -49,12 +49,16 @@ public final class Constants {
     public static final class IntakeConstants {
         public static final int kLeftMotorPort = 3;
         public static final int kRightMotorPort = 4;
-        public static final double kOpenSpeed = -1;
-        public static final double kCloseSpeed = 1;
+    }
+
+    public static final class ManagementConstants {
+        public static final int kMainMotorPort = 3;
     }
 
     public static final class OIConstants {
         public static final int kDriverJoystickPort = 0;
+
+        public static final int kRotateJoystickPort = 1;
 
         public static final int kArcadeDriveSpeedAxis = 1;
         public static final int kArcadeDriveTurnAxis = 3;
@@ -63,6 +67,10 @@ public final class Constants {
         public static final int kElevatorPIDLowerButtonIdx = 2;
         public static final int kElevatorJoystickRaiseButtonIdx = 3;
         public static final int kElevatorJoystickLowerButtonIdx = 4;
-        public static final int kIntakeCloseButtonIdx = 5;
+
+        public static final int kIntakeButtonIdx = 5;
+
+        public static final int kManagementButtonIdx = 6;
+
     }
 }

@@ -7,12 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ManagementSubsystem;
 
-public class Toggelmanagment extends CommandBase {
+public class ToggleManagementCmd extends CommandBase {
   private final ManagementSubsystem managementSubsystem;
   private final boolean toggle;
 
   /** Creates a new Toggelmanagment. */
-  public Toggelmanagment(ManagementSubsystem managementSubsystem, boolean toggle) {
+  public ToggleManagementCmd(ManagementSubsystem managementSubsystem, boolean toggle) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.toggle = toggle;
     this.managementSubsystem = managementSubsystem;
