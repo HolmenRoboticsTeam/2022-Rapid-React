@@ -78,3 +78,20 @@ public class RobotContainer {
     return m_autoCommand;
   }*/
 }
+
+
+
+/*
+
+    public RobotContainer() {
+        configureButtonBindings();
+
+        driveSubsystem.setDefaultCommand(new ArcadeDriveCmd(driveSubsystem, //
+                () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
+                () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis))//
+        );
+        elevatorSubsystem.setDefaultCommand(new ElevatorJoystickCmd(elevatorSubsystem, 0));
+        intakeSubsystem.setDefaultCommand(new IntakeSetCmd(intakeSubsystem, true));
+    }
+
+*/

@@ -10,8 +10,12 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     @Override
-    public void periodic() {
-      // This method will be called once per scheduler run
-    }
+    public void setPosition(boolean open) {
+      if (open) {
+          intakeMotor.set(IntakeConstants.kSpeed);
+      } else {
+          intakeMotor.set(0);
+      }
+  }
 
 }
