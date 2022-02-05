@@ -4,20 +4,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class DriveCmd extends CommandBase {
-  private final DriveSubsystem driveSubsystem;
+public class ShooterCmd extends CommandBase {
+  // button type parallels with the management system
+  private final ShooterSubsystem shooterSubsystem;
+  private final boolean on;
+  /** Creates a new ShooterCmd. */
+  public ShooterCmd(ShooterSubsystem shooterSubsystem, boolean on) {
+    this.shooterSubsystem = shooterSubsystem;
+    this.on = on;
 
-  /** Creates a new DriveCmd. */
-  public DriveCmd(DriveSubsystem driveSubsystem, Joystick joystick) {
-    //this. initilizes it
-    this.driveSubsystem = driveSubsystem;
-
+    addRequirements(shooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +27,7 @@ public class DriveCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    shooterSubsystem.ShooterOn(on);
   }
 
   // Called once the command ends or is interrupted.
