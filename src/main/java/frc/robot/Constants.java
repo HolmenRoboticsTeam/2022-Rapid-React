@@ -69,10 +69,13 @@ public final class Constants {
 
         public static final int kManagementButtonIdx = 6;
 
+        public static final int kShooterButtonIdx = 7;
+
+
     }
 
     public static final class ShooterConstants {
-        public static final int motorPort = 0;
+        public static final int kShootertMotorPort = 0;
         public static final double shooterRunSpeed = 1;
         public static final double shooterStopSpeed = 0;
     }

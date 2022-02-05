@@ -45,8 +45,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick1.getRawButtonPressed(button)),
-    new ToggleManagementCmd(managementSubsystem, joystick1.getRawButtonPressed(button)));
+    new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick1.getRawButtonPressed(OIConstants.kShooterButtonIdx)),
+    new ToggleManagementCmd(managementSubsystem));
 
     // Configure the button bindings
     configureButtonBindings();
