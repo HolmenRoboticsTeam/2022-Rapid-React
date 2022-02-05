@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ManagementConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.DriveCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.ToggleIntakeCmd;
 import frc.robot.commands.ToggleManagementCmd;
@@ -49,7 +50,12 @@ public class RobotContainer {
     new ToggleManagementCmd(managementSubsystem));
 
     // Configure the button bindings
-    configureButtonBindings();
+      configureButtonBindings();
+
+      driveSubsystem.setDefaultCommand(new DriveCmd(driveSubsystem, //
+              () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
+              () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)) //
+      );
   }
 
   /**
@@ -78,10 +84,7 @@ public class RobotContainer {
     return m_autoCommand;
   }*/
 }
-
-
-
-/*
+/*class
 
     public RobotContainer() {
         configureButtonBindings();
