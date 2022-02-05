@@ -20,12 +20,12 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final int leftFrontMotor = 1; // Talons (gets feedback) 
-        public static final int rightFrontMotor = 2; // The unmarked motor
-        public static final int backLeftMotor = 0; // for the tank
-        public static final int middleLeftMotor = 3; // for the H-drive
-        public static final int backRightMotor = 3; // for the tank
-        public static final int middleRightMotor = 2; // for the H-drive
+        public static final int kLeftFrontMotor = 1; // Talons (gets feedback) 
+        public static final int kRightFrontMotor = 2; // The unmarked motor
+        public static final int kBackLeftMotor = 0; // for the tank
+        public static final int kMiddleLeftMotor = 3; // for the H-drive
+        public static final int kBackRightMotor = 3; // for the tank
+        public static final int kMiddleRightMotor = 2; // for the H-drive
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.128 * Math.PI;
 // autonomus
         public static final double kAutoDriveForwardSpeed = 0.5;
@@ -76,5 +76,9 @@ public final class Constants {
         public static final int motorPort = 0;
         public static final double shooterRunSpeed = 1;
         public static final double shooterStopSpeed = 0;
+    }
+
+    public static final class ButtonConstants {
+        public static final int buttonnn = 0;
     }
 }

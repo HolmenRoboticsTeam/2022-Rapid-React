@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 //import frc.robot.commands.ExampleCommand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ManagementConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.ToggleIntakeCmd;
 import frc.robot.commands.ToggleManagementCmd;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -43,7 +45,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
+    new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick1.getRawButtonPressed(button)),
+    new ToggleManagementCmd(managementSubsystem, joystick1.getRawButtonPressed(button)));
 
     // Configure the button bindings
     configureButtonBindings();

@@ -12,9 +12,9 @@ public class ToggleManagementCmd extends CommandBase {
   private final boolean toggle;
 
   /** Creates a new Toggelmanagment. */
-  public ToggleManagementCmd(ManagementSubsystem managementSubsystem, boolean toggle) {
+  public ToggleManagementCmd(ManagementSubsystem managementSubsystem, boolean b) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.toggle = toggle;
+    this.toggle = b;
     this.managementSubsystem = managementSubsystem;
     addRequirements(managementSubsystem);
   }
