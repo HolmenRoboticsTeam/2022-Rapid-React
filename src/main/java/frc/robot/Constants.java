@@ -46,6 +46,12 @@ public final class Constants {
         public static final int kSpeed = 1;
     }
 
+    public static final class ClimberConstants {
+        public static final int kMainMotorPort = 8;
+
+        public static final int kSpeed = 1;
+    }
+
     public static final class ManagementConstants {
         public static final int kManagementMotorPort = 0;
 

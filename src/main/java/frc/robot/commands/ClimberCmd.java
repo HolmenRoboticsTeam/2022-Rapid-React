@@ -10,7 +10,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class ClimberCmd extends CommandBase {
   private final ClimberSubsystem climberSubsystem;
   /** Creates a new ClimberCmd. */
-  public ClimberCmd(ClimberSubsystem climberSubsystem) {
+  public ClimberCmd(ClimberSubsystem climberSubsystem, boolean up) {
     this.climberSubsystem = climberSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }
