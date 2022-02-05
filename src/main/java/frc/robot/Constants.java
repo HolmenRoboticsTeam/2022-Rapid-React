@@ -20,12 +20,12 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final int kLeftMotorPort = 0; // Talons I'd assume
-        public static final int kRightMotorPort = 1; // The unmarked motor I'd assume
-        public static final int kLeftEncoderChannelA = 0; //  Victor for Tank Drive -BackLeft?
-        public static final int kLeftEncoderChannelB = 1; // Victor for H-Drive - left?
-        public static final int kRightEncoderChannelA = 2; // Victor for Tank Drive -BackRight?
-        public static final int kRightEncoderChannelB = 3; // Victor for H-Drive - right?
+        public static final int leftFrontMotor = 1; // Talons (gets feedback) 
+        public static final int rightFrontMotor = 2; // The unmarked motor
+        public static final int backLeftMotor = 0; // for the tank
+        public static final int middleLeftMotor = 3; // for the H-drive
+        public static final int backRightMotor = 3; // for the tank
+        public static final int middleRightMotor = 2; // for the H-drive
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.128 * Math.PI;
 // autonomus
         public static final double kAutoDriveForwardSpeed = 0.5;
@@ -34,8 +34,6 @@ public final class Constants {
 
     public static final class ElevatorConstants {
         public static final int kMotorPort = 2;
-        public static final int kEncoderChannelA = 4;
-        public static final int kEncoderChannelB = 5;
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1 * Math.PI;
         public static final double kP = 3;
         public static final double kI = 0;
@@ -72,5 +70,11 @@ public final class Constants {
 
         public static final int kManagementButtonIdx = 6;
 
+    }
+
+    public static final class ShooterConstants {
+        public static final int motorPort = 0;
+        public static final double shooterRunSpeed = 1;
+        public static final double shooterStopSpeed = 0;
     }
 }
