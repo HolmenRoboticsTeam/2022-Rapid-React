@@ -5,13 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 
-public class LimeLightCmd extends CommandBase {
-  private final LimeLightSubsystem limeLightSubsystem;
-  /** Creates a new LimeLightCmd. */
-  public LimeLightCmd(LimeLightSubsystem limeLightSubsystem) {
-    this.limeLightSubsystem = limeLightSubsystem;
+public class ClimberCmd extends CommandBase {
+  private final ClimberSubsystem climberSubsystem;
+  /** Creates a new ClimberCmd. */
+  public ClimberCmd(ClimberSubsystem climberSubsystem) {
+    this.climberSubsystem = climberSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -22,11 +22,7 @@ public class LimeLightCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // because why not
-    System.out.println(limeLightSubsystem.getDoubleTX());
-    //System.out.println(limeLightSubsystem.getDoubleTY());
-    //System.out.println(limeLightSubsystem.getDoubleTA());
-
+    
   }
 
   // Called once the command ends or is interrupted.
