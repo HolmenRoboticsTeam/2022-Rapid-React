@@ -4,16 +4,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterCmd extends CommandBase {
+public class ShooterCmd extends ParallelCommandGroup {
   // button type parallels with the management system
-  private final ShooterSubsystem shooterSubsystem;
+  private final ShooterSubsystem ShooterSubsystem;
   private final boolean on;
   /** Creates a new ShooterCmd. */
   public ShooterCmd(ShooterSubsystem shooterSubsystem, boolean on) {
-    this.shooterSubsystem = shooterSubsystem;
+
+    this.ShooterSubsystem = shooterSubsystem;
     this.on = on;
 
     addRequirements(shooterSubsystem);
@@ -27,7 +28,7 @@ public class ShooterCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.ShooterOn(on);
+    ShooterSubsystem.ShooterOn(on);
   }
 
   // Called once the command ends or is interrupted.
