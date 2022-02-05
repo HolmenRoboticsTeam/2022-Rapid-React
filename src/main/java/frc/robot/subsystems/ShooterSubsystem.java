@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase{
-  private WPI_TalonSRX shootorMotor = new WPI_TalonSRX(ShooterConstants.motorPort);
+  private WPI_TalonSRX shootorMotor = new WPI_TalonSRX(ShooterConstants.kShootertMotorPort);
 
     public ShooterSubsystem() {
 
