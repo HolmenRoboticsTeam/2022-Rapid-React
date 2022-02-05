@@ -14,16 +14,20 @@ public final class Constants {
         public static final double managerrunspeed = 1;
         public static final double magegerfullstop = 0;
     }
-    
-    public static final class DriveConstants {
-        public static final int kLeftMotorPort = 0;
-        public static final int kRightMotorPort = 1;
-        public static final int kLeftEncoderChannelA = 0;
-        public static final int kLeftEncoderChannelB = 1;
-        public static final int kRightEncoderChannelA = 2;
-        public static final int kRightEncoderChannelB = 3;
-        public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.128 * Math.PI;
 
+    public static final class JoystickDrive {
+        //public
+    }
+
+    public static final class DriveConstants {
+        public static final int kLeftMotorPort = 0; // Talons I'd assume
+        public static final int kRightMotorPort = 1; // The unmarked motor I'd assume
+        public static final int kLeftEncoderChannelA = 0; //  Victor for Tank Drive -BackLeft?
+        public static final int kLeftEncoderChannelB = 1; // Victor for H-Drive - left?
+        public static final int kRightEncoderChannelA = 2; // Victor for Tank Drive -BackRight?
+        public static final int kRightEncoderChannelB = 3; // Victor for H-Drive - right?
+        public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.128 * Math.PI;
+// autonomus
         public static final double kAutoDriveForwardSpeed = 0.5;
         public static final double kAutoDriveForwardDistance = 1.5;
     }

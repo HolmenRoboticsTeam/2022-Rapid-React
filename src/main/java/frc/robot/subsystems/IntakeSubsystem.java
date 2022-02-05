@@ -9,7 +9,8 @@ public class IntakeSubsystem extends SubsystemBase{
 
   private WPI_VictorSPX intakeMotor = new WPI_VictorSPX(IntakeConstants.kLeftMotorPort);
 
-    public IntakeSubsystem() {}
+    public IntakeSubsystem() {
+    }
 
     @Override
     public void periodic() {
@@ -23,5 +24,4 @@ public class IntakeSubsystem extends SubsystemBase{
           intakeMotor.set(IntakeConstants.kCloseSpeed);
       }
   }
-    
 }
