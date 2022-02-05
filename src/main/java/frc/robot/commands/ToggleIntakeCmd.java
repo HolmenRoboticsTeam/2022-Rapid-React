@@ -10,18 +10,21 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class ToggleIntakeCmd extends CommandBase {
 
   private final IntakeSubsystem toggleSubsystem;
-  private final boolean open;
+  private boolean open;
 
-  public ToggleIntakeCmd(IntakeSubsystem toggleSubsystem, boolean open) {
+  public ToggleIntakeCmd(IntakeSubsystem toggleSubsystem) {
 
-    this.open = open;
+    this.open = false;
     this.toggleSubsystem = toggleSubsystem;
     addRequirements(toggleSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+    this.open = !this.open;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

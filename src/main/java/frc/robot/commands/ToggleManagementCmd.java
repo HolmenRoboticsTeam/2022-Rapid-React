@@ -9,24 +9,27 @@ import frc.robot.subsystems.ManagementSubsystem;
 
 public class ToggleManagementCmd extends CommandBase {
   private final ManagementSubsystem managementSubsystem;
-  private final boolean toggle;
+  private boolean open;
 
   /** Creates a new Toggelmanagment. */
-  public ToggleManagementCmd(ManagementSubsystem managementSubsystem, boolean toggle) {
+  public ToggleManagementCmd(ManagementSubsystem managementSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.toggle = toggle;
+    this.open = false;
     this.managementSubsystem = managementSubsystem;
     addRequirements(managementSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+    this.open = !this.open;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    managementSubsystem.toggelmagement(toggle);
+    managementSubsystem.toggelmagement(open);
   }
 
   // Called once the command ends or is interrupted.

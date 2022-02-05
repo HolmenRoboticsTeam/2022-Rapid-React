@@ -57,9 +57,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(joystick1, OIConstants.kIntakeButtonIdx)
-            .whileActiveOnce(new ToggleIntakeCmd(intakeSubsystem, true));
+            .whenPressed(new ToggleIntakeCmd(intakeSubsystem));
     new JoystickButton(joystick1, OIConstants.kManagementButtonIdx)
-            .whileActiveOnce(new ToggleManagementCmd(managementSubsystem, true));
+            .whenPressed(new ToggleManagementCmd(managementSubsystem));
+    new JoystickButton(joystick1, OIConstants.kManagementButtonIdx)
+            .whenPressed(new ToggleManagementCmd(managementSubsystem));
 
 }
 

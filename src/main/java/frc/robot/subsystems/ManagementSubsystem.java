@@ -2,11 +2,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.magamentconstants;
+import frc.robot.Constants.ManagementConstants;
 
 public class ManagementSubsystem extends SubsystemBase {
 
-  private WPI_VictorSPX managenermoter = new WPI_VictorSPX(magamentconstants.magamentoterID);
+  private WPI_VictorSPX managenermoter = new WPI_VictorSPX(ManagementConstants.kManagementMotorPort);
 
   public ManagementSubsystem() {
   }
@@ -16,11 +16,11 @@ public class ManagementSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void toggelmagement(boolean toggel){
-    if (toggel) {
-      managenermoter.set(magamentconstants.managerrunspeed);
+  public void toggelmagement(boolean open){
+    if (open) {
+      managenermoter.set(ManagementConstants.kSpeed);
     }else{
-      managenermoter.set(magamentconstants.magegerfullstop);
+      managenermoter.set(0);
     }
 
   }

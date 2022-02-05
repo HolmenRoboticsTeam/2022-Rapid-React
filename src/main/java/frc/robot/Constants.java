@@ -9,11 +9,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class magamentconstants{
-        public static final int magamentoterID = 0;
-        public static final double managerrunspeed = 1;
-        public static final double magegerfullstop = 0;
-    }
 
     public static final class JoystickDrive {
         //public
@@ -47,10 +42,14 @@ public final class Constants {
     public static final class IntakeConstants {
         public static final int kLeftMotorPort = 3;
         public static final int kRightMotorPort = 4;
+
+        public static final int kSpeed = 1;
     }
 
     public static final class ManagementConstants {
-        public static final int kMainMotorPort = 3;
+        public static final int kManagementMotorPort = 0;
+
+        public static final int kSpeed = 1;
     }
 
     public static final class OIConstants {

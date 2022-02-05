@@ -19,9 +19,9 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public void setPosition(boolean open) {
       if (open) {
-          intakeMotor.set(IntakeConstants.kOpenSpeed);
+          intakeMotor.set(IntakeConstants.kSpeed);
       } else {
-          intakeMotor.set(IntakeConstants.kCloseSpeed);
+          intakeMotor.set(0);
       }
   }
 }
