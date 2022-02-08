@@ -66,16 +66,20 @@ public final class Constants {
         public static final int kArcadeDriveSpeedAxis = 1;
         public static final int kArcadeDriveTurnAxis = 3;
 
-        public static final int kElevatorPIDRaiseButtonIdx = 1;
-        public static final int kElevatorPIDLowerButtonIdx = 2;
-        public static final int kElevatorJoystickRaiseButtonIdx = 3;
-        public static final int kElevatorJoystickLowerButtonIdx = 4;
+        // public static final int kElevatorPIDRaiseButtonIdx = 1;
+        // public static final int kElevatorPIDLowerButtonIdx = 2;
+        // public static final int kElevatorJoystickRaiseButtonIdx = 3;
+        // public static final int kElevatorJoystickLowerButtonIdx = 4;
 
         public static final int kIntakeButtonIdx = 5;
 
         public static final int kManagementButtonIdx = 6;
 
         public static final int kShooterButtonIdx = 7;
+
+        public static final int kClimberButtonUpIdx = 8;
+
+        public static final int kClimberButtonDownIdx = 9;
 
 
     }

@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
@@ -12,9 +14,12 @@ public class DriveCmd extends CommandBase {
   private final DriveSubsystem driveSubsystem;
 
   /** Creates a new DriveCmd. */
-  public DriveCmd(DriveSubsystem driveSubsystem, Joystick joystick) {
+  public DriveCmd(DriveSubsystem driveSubsystem, Supplier<Double> getYAxis, Supplier<Double> getXAxis) {
     //this. initilizes it
     this.driveSubsystem = driveSubsystem;
+
+    double SpeedY = getYAxis.get();
+    double SpeedX = getXAxis.get();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSubsystem);

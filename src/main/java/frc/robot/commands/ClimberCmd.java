@@ -9,9 +9,13 @@ import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberCmd extends CommandBase {
   private final ClimberSubsystem climberSubsystem;
+  private int direction;
   /** Creates a new ClimberCmd. */
-  public ClimberCmd(ClimberSubsystem climberSubsystem, boolean up) {
+  public ClimberCmd(ClimberSubsystem climberSubsystem, int direction) {
     this.climberSubsystem = climberSubsystem;
+    addRequirements(climberSubsystem);
+
+    this.direction = direction;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -22,8 +26,8 @@ public class ClimberCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-  }
+    climberSubsystem.setDirection(direction);
+      }
 
   // Called once the command ends or is interrupted.
   @Override

@@ -9,14 +9,14 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class ToggleIntakeCmd extends CommandBase {
 
-  private final IntakeSubsystem toggleSubsystem;
+  private final IntakeSubsystem toggleIntakeSubsystem;
   private boolean open;
 
-  public ToggleIntakeCmd(IntakeSubsystem toggleSubsystem) {
+  public ToggleIntakeCmd(IntakeSubsystem toggleIntakeSubsystem) {
 
     this.open = false;
-    this.toggleSubsystem = toggleSubsystem;
-    addRequirements(toggleSubsystem);
+    this.toggleIntakeSubsystem = toggleIntakeSubsystem;
+    addRequirements(toggleIntakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +29,7 @@ public class ToggleIntakeCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    toggleSubsystem.setPosition(open);
+    toggleIntakeSubsystem.setPosition(open);
   }
 
   // Called once the command ends or is interrupted.

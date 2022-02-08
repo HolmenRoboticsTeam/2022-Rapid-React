@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ManagementConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ClimberCmd;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.ToggleIntakeCmd;
@@ -52,9 +53,12 @@ public class RobotContainer {
     // Configure the button bindings
       configureButtonBindings();
 
-      driveSubsystem.setDefaultCommand(new DriveCmd(driveSubsystem, //
-              () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
-              () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)) //
+      driveSubsystem.setDefaultCommand(
+        new DriveCmd(
+          driveSubsystem, //
+          () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
+          () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)
+        ) //
       );
   }
 
@@ -69,8 +73,10 @@ public class RobotContainer {
             .whenPressed(new ToggleIntakeCmd(intakeSubsystem));
     new JoystickButton(joystick1, OIConstants.kManagementButtonIdx)
             .whenPressed(new ToggleManagementCmd(managementSubsystem));
-    new JoystickButton(joystick1, OIConstants.kManagementButtonIdx)
-            .whenPressed(new ToggleManagementCmd(managementSubsystem));
+    new JoystickButton(joystick1, OIConstants.kClimberButtonUpIdx)
+            .whenPressed(new ClimberCmd(climberSubsystem, 1));
+    new JoystickButton(joystick1, OIConstants.kClimberButtonDownIdx)
+            .whileActiveOnce(new ClimberCmd(climberSubsystem, -1));
 
 }
 

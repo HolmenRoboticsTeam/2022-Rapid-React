@@ -19,13 +19,14 @@ public class ClimberSubsystem extends SubsystemBase{
       // This method will be called once per scheduler run
     }
 
-    @Override
-    public void setPosition(boolean open) {
-      if (open) {
+    public void setDirection(int direction) {
+      if (direction > 0)
         climberMotor.set(ClimberConstants.kSpeed);
-      } else {
+      else if (direction < 0)
+        climberMotor.set(-ClimberConstants.kSpeed);
+      else
         climberMotor.set(0);
-      }
+      
   }
 
 }
