@@ -6,20 +6,20 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCmd extends CommandBase {
   private final DriveSubsystem driveSubsystem;
+  private final Supplier<Double> getXAxis, getYAxis, getZRotation;
 
   /** Creates a new DriveCmd. */
-  public DriveCmd(DriveSubsystem driveSubsystem, Supplier<Double> getYAxis, Supplier<Double> getXAxis) {
+  public DriveCmd(DriveSubsystem driveSubsystem, Supplier<Double> getYAxis, Supplier<Double> getXAxis, Supplier<Double> getZRotation) {
     //this. initilizes it
     this.driveSubsystem = driveSubsystem;
-
-    double SpeedY = getYAxis.get();
-    double SpeedX = getXAxis.get();
+    this.getYAxis = getYAxis;
+    this.getXAxis = getXAxis;
+    this.getZRotation = getZRotation;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSubsystem);
@@ -27,17 +27,20 @@ public class DriveCmd extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    this.driveSubsystem.arcadeDrive(getXAxis.get(), getYAxis.get(), getZRotation.get());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
