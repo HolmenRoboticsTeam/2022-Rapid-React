@@ -15,7 +15,7 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final int kLeftFrontMotor = 1; // Talons (gets feedback) 
+        public static final int kLeftFrontMotor = 1; // Talons (gets feedback)
         public static final int kRightFrontMotor = 2; // The unmarked motor
         public static final int kBackLeftMotor = 0; // for the tank
         public static final int kMiddleLeftMotor = 3; // for the H-drive
@@ -61,7 +61,7 @@ public final class Constants {
     public static final class OIConstants {
         public static final int kDriverJoystickPort = 0;
 
-        public static final int kRotateJoystickPort = 1;
+        public static final int kDriverJoystickPort2 = 1;
 
         public static final int kArcadeDriveSpeedAxis = 1;
         public static final int kArcadeDriveTurnAxis = 3;

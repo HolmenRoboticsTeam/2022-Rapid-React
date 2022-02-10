@@ -12,7 +12,8 @@ public class ToggleManagementCmd extends CommandBase {
   private boolean open;
 
   /** Creates a new Toggelmanagment.
-   * @param b*/
+   *
+   */
   public ToggleManagementCmd(ManagementSubsystem managementSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.open = false;

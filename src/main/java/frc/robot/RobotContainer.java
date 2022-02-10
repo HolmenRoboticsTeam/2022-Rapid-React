@@ -39,7 +39,9 @@ public class RobotContainer {
   private final ManagementSubsystem managementSubsystem = new ManagementSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
-  private final Joystick joystick1 = new Joystick(OIConstants.kDriverJoystickPort);
+  private final Joystick joystick1 = new Joystick(OIConstants.kDriverJoystickPort); //left joystick
+
+  private final Joystick joystick2 = new Joystick(OIConstants.kDriverJoystickPort2); // right joystick
   // The robot's subsystems and commands are defined here...
   //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -54,12 +56,12 @@ public class RobotContainer {
       configureButtonBindings();
 
       driveSubsystem.setDefaultCommand(
-        new DriveCmd(
-          driveSubsystem, //
-          () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
-          () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)
-        ) //
-      );
+        // new DriveCmd(
+        //   driveSubsystem, //
+        //   () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
+        //   () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)
+        // ) //
+        new DriveCmd(driveSubsystem, () -> -this.joystick1.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
   }
 
   /**
