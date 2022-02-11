@@ -17,6 +17,7 @@ public class IntakeSubsystem extends SubsystemBase{
       // This method will be called once per scheduler run
     }
 
+    //TODO:  is this the best name for the parameter
     public void setPosition(boolean open) {
       if (open) {
           intakeMotor.set(IntakeConstants.kSpeed);

@@ -6,7 +6,7 @@ import frc.robot.Constants.ManagementConstants;
 
 public class ManagementSubsystem extends SubsystemBase {
 
-  private WPI_VictorSPX managenermoter = new WPI_VictorSPX(ManagementConstants.kManagementMotorPort);
+  private WPI_VictorSPX managementMotor = new WPI_VictorSPX(ManagementConstants.kManagementMotorPort);
 
   public ManagementSubsystem() {
   }
@@ -16,11 +16,12 @@ public class ManagementSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void toggelmagement(boolean open){
+  //TODO:  is this the best name for the parameter?
+  public void toggleManagement(boolean open){
     if (open) {
-      managenermoter.set(ManagementConstants.kSpeed);
+      managementMotor.set(ManagementConstants.kSpeed);
     }else{
-      managenermoter.set(0);
+      managementMotor.set(0);
     }
 
   }
