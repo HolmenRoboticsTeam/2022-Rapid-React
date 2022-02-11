@@ -8,11 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 //import frc.robot.commands.ExampleCommand;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ManagementConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberCmd;
 import frc.robot.commands.DriveCmd;
@@ -49,7 +46,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick1.getRawButtonPressed(OIConstants.kShooterButtonIdx)),
+    new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick2.getRawButtonPressed(OIConstants.kShooterButtonIdx)),
     new ToggleManagementCmd(managementSubsystem));
 
     // Configure the button bindings
@@ -71,15 +68,16 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(joystick1, OIConstants.kIntakeButtonIdx)
+    new JoystickButton(joystick2, OIConstants.kIntakeButtonIdx)
             .whenPressed(new ToggleIntakeCmd(intakeSubsystem));
-    new JoystickButton(joystick1, OIConstants.kManagementButtonIdx)
+
+    new JoystickButton(joystick2, OIConstants.kManagementButtonIdx)
             .whenPressed(new ToggleManagementCmd(managementSubsystem));
+
     new JoystickButton(joystick1, OIConstants.kClimberButtonUpIdx)
             .whenPressed(new ClimberCmd(climberSubsystem, 1));
     new JoystickButton(joystick1, OIConstants.kClimberButtonDownIdx)
             .whileActiveOnce(new ClimberCmd(climberSubsystem, -1));
-
 }
 
   /**
