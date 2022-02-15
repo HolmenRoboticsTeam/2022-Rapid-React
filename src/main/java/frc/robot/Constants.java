@@ -71,15 +71,14 @@ public final class Constants {
         // public static final int kElevatorJoystickRaiseButtonIdx = 3;
         // public static final int kElevatorJoystickLowerButtonIdx = 4;
 
-        public static final int kIntakeButtonIdx = 5;
+        public static final int kIntakeButtonIdx = 5; // left middle button: RIGHT JOYSTICK
 
-        public static final int kManagementButtonIdx = 6;
+        public static final int kManagementButtonIdx = 3; // left bottom button: RIGHT JOYSTICK
 
-        public static final int kShooterButtonIdx = 7;
+        public static final int kShooterButtonIdx = 1; // right trigger: RIGHT JOYSTICK (parallels with the management)
 
-        public static final int kClimberButtonUpIdx = 8;
-
-        public static final int kClimberButtonDownIdx = 9;
+        public static final int kClimberButtonUpIdx = 6; // right middle button: LEFT JOYSTICK
+        public static final int kClimberButtonDownIdx = 4; // right bottom button: LEFT JOYSTICK
 
 
     }
