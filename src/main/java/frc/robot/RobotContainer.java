@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberCmd;
 import frc.robot.commands.DriveCmd;
+import frc.robot.commands.RotateShooterCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.ToggleIntakeCmd;
 import frc.robot.commands.ToggleManagementCmd;
@@ -20,6 +21,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ManagementSubsystem;
+import frc.robot.subsystems.ShooterRotationSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /**
@@ -35,6 +37,7 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ManagementSubsystem managementSubsystem = new ManagementSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final ShooterRotationSubsystem shooterRotationSubsystem = new ShooterRotationSubsystem();
 
   private final Joystick joystick1 = new Joystick(OIConstants.kDriverJoystickPort); //left joystick
 
@@ -59,6 +62,8 @@ public class RobotContainer {
         //   () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)
         // ) //
         new DriveCmd(driveSubsystem, () -> -this.joystick1.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
+
+      shooterRotationSubsystem.setDefaultCommand(defaultCommand); // set to constantly track reflective tape
   }
 
   /**
@@ -78,6 +83,9 @@ public class RobotContainer {
             .whenPressed(new ClimberCmd(climberSubsystem, 1));
     new JoystickButton(joystick1, OIConstants.kClimberButtonDownIdx)
             .whileActiveOnce(new ClimberCmd(climberSubsystem, -1));
+
+    new JoystickButton(joystick1, OIConstants.kRotationButtonIdx)
+            .whenPressed(new RotateShooterCmd(shooterRotationSubsystem, 0));
 }
 
   /**

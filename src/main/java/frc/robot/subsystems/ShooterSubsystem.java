@@ -6,7 +6,6 @@ import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase{
   private WPI_TalonSRX shootorMotor = new WPI_TalonSRX(ShooterConstants.kShootertMotorPort);
-  private WPI_TalonSRX shooterRotationMotor = new WPI_TalonSRX(ShooterConstants.kShooterRotationMotorPort);
 
     public ShooterSubsystem() {
 
@@ -24,8 +23,8 @@ public class ShooterSubsystem extends SubsystemBase{
         shootorMotor.set(ShooterConstants.shooterStopSpeed);
       }
     }
-
+    
     public void ShooterRotation(double speed){
-        shootorMotor.set(speed * ShooterConstants.shooterRotationRunSpeed);
+      shootorMotor.set(speed * ShooterConstants.shooterRotationRunSpeed);
     }
 }
