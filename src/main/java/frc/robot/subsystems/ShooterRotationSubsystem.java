@@ -21,6 +21,15 @@ public class ShooterRotationSubsystem extends SubsystemBase {
     shooterRotationMotor.set(speed * ShooterConstants.shooterRotationRunSpeed);
   }
 
+  public void RotationToggle(boolean limelightOn) {
+    if (limelightOn) {
+      shooterRotationMotor.set(ShooterConstants.shooterRotationRunSpeed);
+    } else {
+      shooterRotationMotor.set(0); // :)
+    }
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -12,11 +12,13 @@ public class RotateShooterCmd extends CommandBase {
   /** Creates a new RotateShooterCmd. */
   private final ShooterRotationSubsystem shooterRotationSubsystem;
   private final LimeLightSubsystem limeLight;
+  private boolean limelightOn; // For if we want to assign a button to turn on the rotating part
 
-  public RotateShooterCmd(ShooterRotationSubsystem shooterRotationSubsystem, LimeLightSubsystem limeLight) {
+  public RotateShooterCmd(ShooterRotationSubsystem shooterRotationSubsystem, LimeLightSubsystem limeLight, boolean limelightOn) {
 
     this.shooterRotationSubsystem = shooterRotationSubsystem;
     this.limeLight = limeLight;
+    this.limelightOn = false;
 
     addRequirements(shooterRotationSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,12 +27,16 @@ public class RotateShooterCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    this.limelightOn = !this.limelightOn;
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    shooterRotationSubsystem.RotationToggle(limelightOn);
+  
     if(limeLight.getDoubleTX() != 0.0){
       shooterRotationSubsystem.ShooterRotation(limeLight.getDoubleTX() / 5.0);
 
