@@ -80,6 +80,8 @@ public final class Constants {
         public static final int kClimberButtonUpIdx = 6; // right middle button: LEFT JOYSTICK
         public static final int kClimberButtonDownIdx = 4; // right bottom button: LEFT JOYSTICK
 
+        public static final int kRotationButtonIdx = 99;
+
 
     }
 
@@ -89,7 +91,11 @@ public final class Constants {
         public static final double shooterStopSpeed = 0;
 
         public static final int kShooterRotationMotorPort = 17;
+        public static final int kVerticalShooterMotorPort = 215;
+
         public static final double shooterRotationRunSpeed = 1;
+        public static final double verticalMotorRunSpeed = 2;
+
     }
 
     public static final class ButtonConstants {

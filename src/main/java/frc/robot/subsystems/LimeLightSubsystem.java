@@ -36,6 +36,10 @@ public class LimeLightSubsystem extends SubsystemBase {
     return (ta.getDouble(0.0));
   }
 
+  public boolean findTarget() {
+    return (this.getDoubleTA() > 0 || this.getDoubleTX() > 0 || this.getDoubleTY() > 0);
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
