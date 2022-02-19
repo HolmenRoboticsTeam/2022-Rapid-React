@@ -10,10 +10,6 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final class JoystickDrive {
-        //public
-    }
-
     public static final class DriveConstants {
         public static final int kLeftFrontMotor = 1; // Talons (gets feedback)
         public static final int kRightFrontMotor = 2; // The unmarked motor
@@ -25,18 +21,6 @@ public final class Constants {
 // autonomus
         public static final double kAutoDriveForwardSpeed = 0.5;
         public static final double kAutoDriveForwardDistance = 1.5;
-    }
-
-    public static final class ElevatorConstants {
-        public static final int kMotorPort = 2;
-        public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1 * Math.PI;
-        public static final double kP = 3;
-        public static final double kI = 0;
-        public static final double kD = 0.8;
-
-        public static final double kRaisedPosition = 1.2;
-        public static final double kLoweredPosition = 0;
-        public static final double kJoystickMaxSpeed = 0.5;
     }
 
     public static final class IntakeConstants {
@@ -59,17 +43,12 @@ public final class Constants {
     }
 
     public static final class OIConstants {
-        public static final int kDriverJoystickPort = 0;
+        public static final int kDriverJoystickPort = 0; //left joystick
 
-        public static final int kDriverJoystickPort2 = 1;
+        public static final int kDriverJoystickPort2 = 1; //right joystick
 
         public static final int kArcadeDriveSpeedAxis = 1;
         public static final int kArcadeDriveTurnAxis = 3;
-
-        // public static final int kElevatorPIDRaiseButtonIdx = 1;
-        // public static final int kElevatorPIDLowerButtonIdx = 2;
-        // public static final int kElevatorJoystickRaiseButtonIdx = 3;
-        // public static final int kElevatorJoystickLowerButtonIdx = 4;
 
         public static final int kIntakeButtonIdx = 5; // left middle button: RIGHT JOYSTICK
 
@@ -80,9 +59,12 @@ public final class Constants {
         public static final int kClimberButtonUpIdx = 6; // right middle button: LEFT JOYSTICK
         public static final int kClimberButtonDownIdx = 4; // right bottom button: LEFT JOYSTICK
 
-        public static final int kRotationButtonIdx = 99;
+        public static final int kRotationButtonIdx = 99; // for vertical shooter
 
-
+        // public static final int kElevatorPIDRaiseButtonIdx = 1;
+        // public static final int kElevatorPIDLowerButtonIdx = 2;
+        // public static final int kElevatorJoystickRaiseButtonIdx = 3;
+        // public static final int kElevatorJoystickLowerButtonIdx = 4;
     }
 
     public static final class ShooterConstants {
@@ -97,16 +79,26 @@ public final class Constants {
         public static final double verticalMotorRunSpeed = 2;
 
         public static final double rotationConstantAngle = 2.5;
-        public static final double kMinimumRotationSpeed = 0.0;
-        public static final double kMaximumRotationSpeed = 0.2;
+        public static final double kMinimumRotationSpeed = -0.4;
+        public static final double kMaximumRotationSpeed = 0.4;
 
         public static final double kLimeLightAngle = 15; // degrees
-        public static final double kLimeLightHeightFromGround = 5.5; // ft //66 inches
+        public static final double kLimeLightHeightFromGround = 5.5; // ft
         public static final double kHeightOfTarget = 8.8; // ft
         public static final double kPControlConstant = -0.1;
     }
 
-    public static final class ButtonConstants {
-        public static final int buttonnn = 0;
-    }
+    //          /* currently not being used */
+//     public static final class ElevatorConstants {
+//         public static final int kMotorPort = 2;
+//         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1 * Math.PI;
+//         public static final double kP = 3;
+//         public static final double kI = 0;
+//         public static final double kD = 0.8;
+
+//         public static final double kRaisedPosition = 1.2;
+//         public static final double kLoweredPosition = 0;
+//         public static final double kJoystickMaxSpeed = 0.5;
+//     }
+
 }
