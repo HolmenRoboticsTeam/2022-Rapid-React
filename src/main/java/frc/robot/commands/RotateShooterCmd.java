@@ -53,13 +53,13 @@ public class RotateShooterCmd extends CommandBase {
       speed = minimumSpeed;
     }
 
-    // System.out.println(speed);
+    System.out.println(speed);
     shooterRotationSubsystem.RotationToggle(limelightOn);
 
-    // if(limeLight.getDoubleTX() != 0.0){
-    //   shooterRotationSubsystem.ShooterRotation(speed);
+    if(limeLight.getDoubleTX() != 0.0){
+      shooterRotationSubsystem.ShooterRotation(speed);
 
-    //   }
+      }
 
       double tY = this.limeLight.getDoubleTY();
       double angleToGoalDegrees = (ShooterConstants.kLimeLightAngle + tY);
