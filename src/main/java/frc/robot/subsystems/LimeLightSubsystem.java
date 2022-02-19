@@ -13,16 +13,13 @@ public class LimeLightSubsystem extends SubsystemBase {
   private final NetworkTable table;
   private final NetworkTableEntry tx;
   private final NetworkTableEntry ty;
-  private final NetworkTableEntry ta; // target area
-  private final NetworkTableEntry tv; // target valid
+  private final NetworkTableEntry ta;
 
-  /** Creates a new LimeLightSubsystem. */
   public LimeLightSubsystem() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
-    tv = table.getEntry("tv");
 
   }
 
@@ -38,16 +35,10 @@ public class LimeLightSubsystem extends SubsystemBase {
     return (ta.getDouble(0.0));
   }
 
-  public double getDoubleTV() {
-    return (tv.getDouble(0.0));
-  }
-
   public boolean findTarget() {
     return (this.getDoubleTA() > 0 || this.getDoubleTX() > 0 || this.getDoubleTY() > 0);
   }
   
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {} //
 }

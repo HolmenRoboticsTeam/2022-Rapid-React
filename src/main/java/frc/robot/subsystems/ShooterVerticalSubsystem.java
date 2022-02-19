@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot.subsystems; // In progress
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -11,7 +11,7 @@ import frc.robot.Constants.ShooterConstants;
 
 public class ShooterVerticalSubsystem extends SubsystemBase {
   private WPI_TalonSRX shooterVerticalSubsystem = new WPI_TalonSRX(ShooterConstants.kVerticalShooterMotorPort);
-  /** Creates a new ShooterVerticalSubsystem. */
+
   public ShooterVerticalSubsystem() {
 
   }
@@ -21,7 +21,5 @@ public class ShooterVerticalSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {} //
 }

@@ -13,8 +13,6 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterRotationSubsystem extends SubsystemBase {
   private Spark shooterRotationMotor = new Spark(ShooterConstants.kShooterRotationMotorPort);
 
-  /** Creates a new ShooterRotationSubsystem. */
-
   public ShooterRotationSubsystem() {
 
   }
@@ -25,16 +23,12 @@ public class ShooterRotationSubsystem extends SubsystemBase {
   public void RotationToggle(boolean limelightOn) {
     if (limelightOn) {
       shooterRotationMotor.set(ShooterConstants.shooterRotationRunSpeed);
-      System.out.println(ShooterConstants.shooterRotationRunSpeed);
     } else {
       shooterRotationMotor.set(0); // :)
-      System.out.println("shooter set to zero");
     }
   }
 
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {} //
 }

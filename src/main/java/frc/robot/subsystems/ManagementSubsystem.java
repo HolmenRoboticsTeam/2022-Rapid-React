@@ -8,15 +8,11 @@ public class ManagementSubsystem extends SubsystemBase {
 
   private WPI_VictorSPX managementMotor = new WPI_VictorSPX(ManagementConstants.kManagementMotorPort);
 
-  public ManagementSubsystem() {
-  }
+  public ManagementSubsystem() {}
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {} //
 
-  //TODO:  is this the best name for the parameter?
   public void toggleManagement(boolean open){
     if (open) {
       managementMotor.set(ManagementConstants.kSpeed);

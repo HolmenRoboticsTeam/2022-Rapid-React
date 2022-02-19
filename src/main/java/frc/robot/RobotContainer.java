@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-//import frc.robot.commands.ExampleCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
@@ -25,12 +24,7 @@ import frc.robot.subsystems.ManagementSubsystem;
 import frc.robot.subsystems.ShooterRotationSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
+
 public class RobotContainer {
 
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
@@ -44,26 +38,17 @@ public class RobotContainer {
   private final Joystick joystick1 = new Joystick(OIConstants.kDriverJoystickPort); //left joystick
 
   private final Joystick joystick2 = new Joystick(OIConstants.kDriverJoystickPort2); // right joystick
-  // The robot's subsystems and commands are defined here...
-  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick2.getRawButtonPressed(OIConstants.kShooterButtonIdx)),
     new ToggleManagementCmd(managementSubsystem));
 
-    //Configure the button bindings
-//       configureButtonBindings();
+   // Configure the button bindings
+      configureButtonBindings();
 
-//       driveSubsystem.setDefaultCommand(
-//         // new DriveCmd(
-//         //   driveSubsystem, //
-//         //   () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
-//         //   () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)
-//         // ) //
-//         new DriveCmd(driveSubsystem, () -> -this.joystick1.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
+      driveSubsystem.setDefaultCommand(
+        new DriveCmd(driveSubsystem, () -> -this.joystick1.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
 
       shooterRotationSubsystem.setDefaultCommand(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, true)); // set to constantly track reflective tape
   }
@@ -100,17 +85,7 @@ public class RobotContainer {
     return m_autoCommand;
   }*/
 }
-/*class
-
-    public RobotContainer() {
-        configureButtonBindings();
-
-        driveSubsystem.setDefaultCommand(new ArcadeDriveCmd(driveSubsystem, //
-                () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
-                () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis))//
-        );
+/*
         elevatorSubsystem.setDefaultCommand(new ElevatorJoystickCmd(elevatorSubsystem, 0));
         intakeSubsystem.setDefaultCommand(new IntakeSetCmd(intakeSubsystem, true));
-    }
-
 */

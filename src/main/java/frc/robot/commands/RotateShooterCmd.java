@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
@@ -14,17 +16,20 @@ public class RotateShooterCmd extends CommandBase {
   /** Creates a new RotateShooterCmd. */
   private final ShooterRotationSubsystem shooterRotationSubsystem;
   private final LimeLightSubsystem limeLight;
-  private boolean limelightOn; // For if we want to assign a button to turn on the rotating part
+  private PIDController pid = new PIDController(0.03, 0, 0.0005);
+  //private boolean limelightOn; // For if we want to assign a button to turn on the rotating part
 
   public RotateShooterCmd(ShooterRotationSubsystem shooterRotationSubsystem, LimeLightSubsystem limeLight, boolean limelightOn) {
 
     this.shooterRotationSubsystem = shooterRotationSubsystem;
     this.limeLight = limeLight;
-    this.limelightOn = limelightOn;
+    pid.disableContinuousInput();
+    //this.limelightOn = limelightOn;
 
     SmartDashboard.putNumber("Shooter Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
     SmartDashboard.putNumber("Shooter Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
     SmartDashboard.putNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
+    shooterRotationSubsystem.RotationToggle(limelightOn);
 
     addRequirements(shooterRotationSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -45,43 +50,25 @@ public class RotateShooterCmd extends CommandBase {
 
     double minimumSpeed = SmartDashboard.getNumber("Shooter Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
     double maximumSpeed = SmartDashboard.getNumber("Shooter Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
-    double rotationSlowDownAngle = SmartDashboard.getNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
-    double speed = maximumSpeed;
-    speed = tX > 0 ? maximumSpeed : -maximumSpeed;
+    //double rotationSlowDownAngle = SmartDashboard.getNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
+    
+    double speed = -pid.calculate(tX, 0);
 
-    if(Math.abs(tX) < rotationSlowDownAngle) {
-      speed = minimumSpeed;
-    }
-
+    speed = MathUtil.clamp(speed, minimumSpeed, maximumSpeed);
     System.out.println(speed);
-    shooterRotationSubsystem.RotationToggle(limelightOn);
-
-    if(limeLight.getDoubleTX() != 0.0){
-      shooterRotationSubsystem.ShooterRotation(speed);
-
-      }
+    shooterRotationSubsystem.ShooterRotation(speed);
 
       double tY = this.limeLight.getDoubleTY();
       double angleToGoalDegrees = (ShooterConstants.kLimeLightAngle + tY);
       double angleToGoalRadians = (angleToGoalDegrees * (Math.PI/180.0));
 
       double distanceFromLimelightToGoalInches = ((ShooterConstants.kHeightOfTarget - ShooterConstants.kLimeLightHeightFromGround)/(Math.tan(angleToGoalRadians)));
-      System.out.println(distanceFromLimelightToGoalInches);
 
-      // double tV = this.limeLight.getDoubleTV();
-      // double kP = ShooterConstants.kPControlConstant;
-      // double steering_adjust = kP * tX;
-
-      // if ( tV == 0.0) {
-      //   steering_adjust = 0.3f;
-      // }
     }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

@@ -16,20 +16,16 @@ public class ClimberCmd extends CommandBase {
     addRequirements(climberSubsystem);
 
     this.direction = direction;
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {} //
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     climberSubsystem.setDirection(direction);
       }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 

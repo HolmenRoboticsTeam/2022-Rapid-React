@@ -16,6 +16,8 @@ public class ToggleIntakeCmd extends CommandBase {
 
     this.open = false;
     this.toggleIntakeSubsystem = toggleIntakeSubsystem;
+
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(toggleIntakeSubsystem);
   }
 

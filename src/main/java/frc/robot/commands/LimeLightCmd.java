@@ -9,28 +9,21 @@ import frc.robot.subsystems.LimeLightSubsystem;
 
 public class LimeLightCmd extends CommandBase {
   private final LimeLightSubsystem limeLightSubsystem;
-  /** Creates a new LimeLightCmd. */
+
   public LimeLightCmd(LimeLightSubsystem limeLightSubsystem) {
     this.limeLightSubsystem = limeLightSubsystem;
-    //TODO:  are we missing something here?
+
+    addRequirements(limeLightSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {} //
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    // because why not
-    //System.out.println(limeLightSubsystem.getDoubleTX());
-    //System.out.println(limeLightSubsystem.getDoubleTY());
-    //System.out.println(limeLightSubsystem.getDoubleTA());
+  public void execute() {} //
 
-  }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 

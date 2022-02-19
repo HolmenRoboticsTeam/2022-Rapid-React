@@ -11,20 +11,17 @@ public class ToggleManagementCmd extends CommandBase {
   private final ManagementSubsystem managementSubsystem;
   private boolean open;
 
-  /** Creates a new Toggelmanagment.
-   *
-   */
   public ToggleManagementCmd(ManagementSubsystem managementSubsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.open = false;
     this.managementSubsystem = managementSubsystem;
+
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(managementSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
     this.open = !this.open;
   }
 
@@ -34,7 +31,6 @@ public class ToggleManagementCmd extends CommandBase {
     managementSubsystem.toggleManagement(open);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 

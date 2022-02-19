@@ -9,15 +9,11 @@ public class IntakeSubsystem extends SubsystemBase{
 
   private WPI_VictorSPX intakeMotor = new WPI_VictorSPX(IntakeConstants.kLeftMotorPort);
 
-    public IntakeSubsystem() {
-    }
+    public IntakeSubsystem() {} //
 
     @Override
-    public void periodic() {
-      // This method will be called once per scheduler run
-    }
+    public void periodic() {} //
 
-    //TODO:  is this the best name for the parameter
     public void setPosition(boolean open) {
       if (open) {
           intakeMotor.set(IntakeConstants.kSpeed);
