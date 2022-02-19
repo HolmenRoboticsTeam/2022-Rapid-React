@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.ShooterRotationSubsystem;
 
@@ -18,7 +20,11 @@ public class RotateShooterCmd extends CommandBase {
 
     this.shooterRotationSubsystem = shooterRotationSubsystem;
     this.limeLight = limeLight;
-    this.limelightOn = false;
+    this.limelightOn = limelightOn;
+
+    SmartDashboard.putNumber("Shooter Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
+    SmartDashboard.putNumber("Shooter Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
+    SmartDashboard.putNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
 
     addRequirements(shooterRotationSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +33,7 @@ public class RotateShooterCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.limelightOn = !this.limelightOn;
+    // this.limelightOn = !this.limelightOn;
 
   }
 
@@ -35,13 +41,26 @@ public class RotateShooterCmd extends CommandBase {
   @Override
   public void execute() {
 
+    double tX = this.limeLight.getDoubleTX();
+
+    double minimumSpeed = SmartDashboard.getNumber("Shooter Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
+    double maximumSpeed = SmartDashboard.getNumber("Shooter Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
+    double rotationSlowDownAngle = SmartDashboard.getNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
+    double speed = maximumSpeed;
+    speed = tX > 0 ? maximumSpeed : -maximumSpeed;
+
+    if(Math.abs(tX) < rotationSlowDownAngle) {
+      speed = minimumSpeed;
+    }
+
+    System.out.println(speed);
     shooterRotationSubsystem.RotationToggle(limelightOn);
-  
+
     if(limeLight.getDoubleTX() != 0.0){
-      shooterRotationSubsystem.ShooterRotation(limeLight.getDoubleTX() / 5.0);
+      shooterRotationSubsystem.ShooterRotation(speed);
 
     }
-  }
+    }
 
   // Called once the command ends or is interrupted.
   @Override

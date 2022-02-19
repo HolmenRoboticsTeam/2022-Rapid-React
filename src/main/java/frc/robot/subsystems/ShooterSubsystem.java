@@ -25,6 +25,7 @@ public class ShooterSubsystem extends SubsystemBase{
     }
     
     public void ShooterRotation(double speed){
-      shootorMotor.set(speed * ShooterConstants.shooterRotationRunSpeed);
+      //shootorMotor.set(speed * ShooterConstants.shooterRotationRunSpeed);
+      System.out.println(speed * ShooterConstants.shooterRotationRunSpeed);
     }
 }

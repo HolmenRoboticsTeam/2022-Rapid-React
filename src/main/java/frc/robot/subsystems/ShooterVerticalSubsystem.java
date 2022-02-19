@@ -16,7 +16,7 @@ public class ShooterVerticalSubsystem extends SubsystemBase {
 
   }
 
-  public void ShooterRotation(double speed){
+  public void ShooterVerticalMovement(double speed){
     shooterVerticalSubsystem.set(speed * ShooterConstants.verticalMotorRunSpeed);
   }
 

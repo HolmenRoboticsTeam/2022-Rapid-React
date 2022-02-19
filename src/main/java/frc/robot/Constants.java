@@ -90,12 +90,15 @@ public final class Constants {
         public static final double shooterRunSpeed = 1;
         public static final double shooterStopSpeed = 0;
 
-        public static final int kShooterRotationMotorPort = 17;
+        public static final int kShooterRotationMotorPort = 7;
         public static final int kVerticalShooterMotorPort = 215;
 
-        public static final double shooterRotationRunSpeed = 1;
+        public static final double shooterRotationRunSpeed = 0.05;
         public static final double verticalMotorRunSpeed = 2;
 
+        public static final double rotationConstantAngle = 2.5;
+        public static final double kMinimumRotationSpeed = 0.0;
+        public static final double kMaximumRotationSpeed = 0.2;
     }
 
     public static final class ButtonConstants {

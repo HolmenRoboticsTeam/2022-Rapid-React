@@ -20,6 +20,7 @@ import frc.robot.commands.ToggleManagementCmd;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.ManagementSubsystem;
 import frc.robot.subsystems.ShooterRotationSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final ManagementSubsystem managementSubsystem = new ManagementSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ShooterRotationSubsystem shooterRotationSubsystem = new ShooterRotationSubsystem();
+  private final LimeLightSubsystem limelightSubsystem = new LimeLightSubsystem();
 
   private final Joystick joystick1 = new Joystick(OIConstants.kDriverJoystickPort); //left joystick
 
@@ -49,21 +51,21 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick2.getRawButtonPressed(OIConstants.kShooterButtonIdx)),
-    new ToggleManagementCmd(managementSubsystem));
+//     new ParallelCommandGroup(new ShooterCmd(shooterSubsystem, joystick2.getRawButtonPressed(OIConstants.kShooterButtonIdx)),
+//     new ToggleManagementCmd(managementSubsystem));
 
     // Configure the button bindings
-      configureButtonBindings();
+//       configureButtonBindings();
 
-      driveSubsystem.setDefaultCommand(
-        // new DriveCmd(
-        //   driveSubsystem, //
-        //   () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
-        //   () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)
-        // ) //
-        new DriveCmd(driveSubsystem, () -> -this.joystick1.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
+//       driveSubsystem.setDefaultCommand(
+//         // new DriveCmd(
+//         //   driveSubsystem, //
+//         //   () -> -joystick1.getRawAxis(OIConstants.kArcadeDriveSpeedAxis),
+//         //   () -> joystick1.getRawAxis(OIConstants.kArcadeDriveTurnAxis)
+//         // ) //
+//         new DriveCmd(driveSubsystem, () -> -this.joystick1.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
 
-      shooterRotationSubsystem.setDefaultCommand(defaultCommand); // set to constantly track reflective tape
+      shooterRotationSubsystem.setDefaultCommand(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, true)); // set to constantly track reflective tape
   }
 
   /**
@@ -85,7 +87,7 @@ public class RobotContainer {
             .whileActiveOnce(new ClimberCmd(climberSubsystem, -1));
 
     new JoystickButton(joystick1, OIConstants.kRotationButtonIdx)
-            .whenPressed(new RotateShooterCmd(shooterRotationSubsystem, 0));
+            .whenPressed(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, false));
 }
 
   /**
