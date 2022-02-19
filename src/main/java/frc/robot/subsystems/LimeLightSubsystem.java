@@ -13,7 +13,8 @@ public class LimeLightSubsystem extends SubsystemBase {
   private final NetworkTable table;
   private final NetworkTableEntry tx;
   private final NetworkTableEntry ty;
-  private final NetworkTableEntry ta;
+  private final NetworkTableEntry ta; // target area
+  private final NetworkTableEntry tv; // target valid
 
   /** Creates a new LimeLightSubsystem. */
   public LimeLightSubsystem() {
@@ -21,6 +22,7 @@ public class LimeLightSubsystem extends SubsystemBase {
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
+    tv = table.getEntry("tv");
 
   }
 
@@ -34,6 +36,10 @@ public class LimeLightSubsystem extends SubsystemBase {
 
   public double getDoubleTA() {
     return (ta.getDouble(0.0));
+  }
+
+  public double getDoubleTV() {
+    return (tv.getDouble(0.0));
   }
 
   public boolean findTarget() {

@@ -99,6 +99,11 @@ public final class Constants {
         public static final double rotationConstantAngle = 2.5;
         public static final double kMinimumRotationSpeed = 0.0;
         public static final double kMaximumRotationSpeed = 0.2;
+
+        public static final double kLimeLightAngle = 15; // degrees
+        public static final double kLimeLightHeightFromGround = 5.5; // ft //66 inches
+        public static final double kHeightOfTarget = 8.8; // ft
+        public static final double kPControlConstant = -0.1;
     }
 
     public static final class ButtonConstants {

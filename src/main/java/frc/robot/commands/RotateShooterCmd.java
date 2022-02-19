@@ -53,13 +53,28 @@ public class RotateShooterCmd extends CommandBase {
       speed = minimumSpeed;
     }
 
-    System.out.println(speed);
+    // System.out.println(speed);
     shooterRotationSubsystem.RotationToggle(limelightOn);
 
-    if(limeLight.getDoubleTX() != 0.0){
-      shooterRotationSubsystem.ShooterRotation(speed);
+    // if(limeLight.getDoubleTX() != 0.0){
+    //   shooterRotationSubsystem.ShooterRotation(speed);
 
-    }
+    //   }
+
+      double tY = this.limeLight.getDoubleTY();
+      double angleToGoalDegrees = (ShooterConstants.kLimeLightAngle + tY);
+      double angleToGoalRadians = (angleToGoalDegrees * (Math.PI/180.0));
+
+      double distanceFromLimelightToGoalInches = ((ShooterConstants.kHeightOfTarget - ShooterConstants.kLimeLightHeightFromGround)/(Math.tan(angleToGoalRadians)));
+      System.out.println(distanceFromLimelightToGoalInches);
+
+      // double tV = this.limeLight.getDoubleTV();
+      // double kP = ShooterConstants.kPControlConstant;
+      // double steering_adjust = kP * tX;
+
+      // if ( tV == 0.0) {
+      //   steering_adjust = 0.3f;
+      // }
     }
 
   // Called once the command ends or is interrupted.

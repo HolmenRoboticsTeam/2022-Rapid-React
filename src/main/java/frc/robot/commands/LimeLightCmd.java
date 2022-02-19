@@ -24,7 +24,7 @@ public class LimeLightCmd extends CommandBase {
   @Override
   public void execute() {
     // because why not
-    System.out.println(limeLightSubsystem.getDoubleTX());
+    //System.out.println(limeLightSubsystem.getDoubleTX());
     //System.out.println(limeLightSubsystem.getDoubleTY());
     //System.out.println(limeLightSubsystem.getDoubleTA());
 
