@@ -14,7 +14,7 @@ public class ToggleIntakeCmd extends CommandBase {
 
   public ToggleIntakeCmd(IntakeSubsystem toggleIntakeSubsystem) {
 
-    this.open = false;
+    this.open = true;
     this.toggleIntakeSubsystem = toggleIntakeSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,7 +25,7 @@ public class ToggleIntakeCmd extends CommandBase {
   @Override
   public void initialize() {
 
-    this.open = !this.open;
+   // this.open = !this.open; //true
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,7 +36,9 @@ public class ToggleIntakeCmd extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    toggleIntakeSubsystem.setPosition(false);
+  }
 
   // Returns true when the command should end.
   @Override

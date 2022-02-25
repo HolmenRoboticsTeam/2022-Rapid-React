@@ -39,6 +39,12 @@ public class DriveSubsystem extends SubsystemBase {
     leftFrontMotor.setSelectedSensorPosition(0);
     rightFrontMotor.setSelectedSensorPosition(0);
 
+    rightFrontMotor.setInverted(true);
+    backRightMotor.setInverted(true);
+
+    leftFrontMotor.setSensorPhase(true);
+    rightFrontMotor.setSensorPhase(true);
+
     backLeftMotor.follow(leftFrontMotor);
     backRightMotor.follow(rightFrontMotor);
 

@@ -48,7 +48,7 @@ public class RobotContainer {
       configureButtonBindings();
 
       driveSubsystem.setDefaultCommand(
-        new DriveCmd(driveSubsystem, () -> -this.joystick1.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
+        new DriveCmd(driveSubsystem, () -> -this.joystick2.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
 
       shooterRotationSubsystem.setDefaultCommand(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, true)); // set to constantly track reflective tape
   }
@@ -61,17 +61,17 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(joystick2, OIConstants.kIntakeButtonIdx)
-            .whenPressed(new ToggleIntakeCmd(intakeSubsystem));
+            .whenHeld(new ToggleIntakeCmd(intakeSubsystem));
 
     new JoystickButton(joystick2, OIConstants.kManagementButtonIdx)
-            .whenPressed(new ToggleManagementCmd(managementSubsystem));
+            .whenHeld( new ToggleManagementCmd(managementSubsystem));
 
     new JoystickButton(joystick1, OIConstants.kClimberButtonUpIdx)
             .whenPressed(new ClimberCmd(climberSubsystem, 1));
     new JoystickButton(joystick1, OIConstants.kClimberButtonDownIdx)
             .whileActiveOnce(new ClimberCmd(climberSubsystem, -1));
 
-    new JoystickButton(joystick1, OIConstants.kRotationButtonIdx)
+    new JoystickButton(joystick2, OIConstants.kRotationButtonIdx)
             .whenPressed(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, false));
 }
 

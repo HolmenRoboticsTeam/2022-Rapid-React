@@ -11,12 +11,12 @@ package frc.robot;
 public final class Constants {
 
     public static final class DriveConstants {
-        public static final int kLeftFrontMotor = 1; // Talons (gets feedback)
-        public static final int kRightFrontMotor = 2; // The unmarked motor
-        public static final int kBackLeftMotor = 0; // for the tank
-        public static final int kMiddleLeftMotor = 3; // for the H-drive
-        public static final int kBackRightMotor = 3; // for the tank
-        public static final int kMiddleRightMotor = 2; // for the H-drive
+        public static final int kLeftFrontMotor = 2; // Talons (gets feedback)              Talon 2
+        public static final int kRightFrontMotor = 1; // The unmarked motor                 Talon 1
+        public static final int kBackLeftMotor = 3; // for the tank                         Victor 3
+        public static final int kMiddleLeftMotor = 2; // for the H-drive                     Victor 2
+        public static final int kBackRightMotor = 0; // for the tank                        Victor 0
+        public static final int kMiddleRightMotor = 1; // for the H-drive                   Victor 1
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.128 * Math.PI;
 // autonomus
         public static final double kAutoDriveForwardSpeed = 0.5;
@@ -24,22 +24,22 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int kLeftMotorPort = 3;
-        public static final int kRightMotorPort = 4;
+        public static final int kLeftMotorPort = 5; //                  Victor 5
+        public static final int kRightMotorPort = 11; // uneeded
 
-        public static final int kSpeed = 1;
+        public static final double kSpeed = 0.5;
     }
 
     public static final class ClimberConstants {
-        public static final int kMainMotorPort = 8;
+        public static final int kMainMotorPort = 11;
 
         public static final int kSpeed = 1;
     }
 
     public static final class ManagementConstants {
-        public static final int kManagementMotorPort = 0;
+        public static final int kManagementMotorPort = 4; //            Victor 4
 
-        public static final int kSpeed = 1;
+        public static final double kSpeed = 0.1;
     }
 
     public static final class OIConstants {
@@ -59,7 +59,7 @@ public final class Constants {
         public static final int kClimberButtonUpIdx = 6; // right middle button: LEFT JOYSTICK
         public static final int kClimberButtonDownIdx = 4; // right bottom button: LEFT JOYSTICK
 
-        public static final int kRotationButtonIdx = 99; // for vertical shooter
+        public static final int kRotationButtonIdx = 11; // for vertical shooter
 
         // public static final int kElevatorPIDRaiseButtonIdx = 1;
         // public static final int kElevatorPIDLowerButtonIdx = 2;
@@ -68,11 +68,11 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int kShootertMotorPort = 0;
+        public static final int kShootertMotorPort = 11;
         public static final double shooterRunSpeed = 1;
         public static final double shooterStopSpeed = 0;
 
-        public static final int kShooterRotationMotorPort = 7;
+        public static final int kShooterRotationMotorPort = 3; // elevator motor
         public static final int kVerticalShooterMotorPort = 215;
 
         public static final double shooterRotationRunSpeed = 0.05;
