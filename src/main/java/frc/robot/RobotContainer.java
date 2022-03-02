@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -26,6 +28,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 
 public class RobotContainer {
+
+  private final UsbCamera camera1 = CameraServer.startAutomaticCapture();
+  private final UsbCamera camera2 = CameraServer.startAutomaticCapture();
 
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
