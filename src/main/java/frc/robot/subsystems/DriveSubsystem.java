@@ -1,35 +1,35 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants; 
 
 public class DriveSubsystem extends SubsystemBase {
 
-  private WPI_TalonSRX leftFrontMotor = new WPI_TalonSRX(DriveConstants.kLeftFrontMotor); 
-  private WPI_TalonSRX rightFrontMotor = new WPI_TalonSRX(DriveConstants.kRightFrontMotor); 
-                                                                                            //encoders are 
-  private WPI_VictorSPX backLeftMotor = new WPI_VictorSPX(DriveConstants.kBackLeftMotor); 
-  private WPI_VictorSPX backRightMotor = new WPI_VictorSPX(DriveConstants.kBackRightMotor); 
+  private WPI_TalonSRX leftFrontMotor = new WPI_TalonSRX(DriveConstants.kLeftFrontMotor);
+  private WPI_TalonSRX rightFrontMotor = new WPI_TalonSRX(DriveConstants.kRightFrontMotor);
+  private WPI_VictorSPX backLeftMotor = new WPI_VictorSPX(DriveConstants.kBackLeftMotor);
+  private WPI_VictorSPX backRightMotor = new WPI_VictorSPX(DriveConstants.kBackRightMotor);
 
   // H-Drive portion of code
-  private WPI_VictorSPX leftMotorOfH_Wheel = new WPI_VictorSPX(DriveConstants.kMiddleLeftMotor); 
-  private WPI_VictorSPX rightMotorOfH_Wheel = new WPI_VictorSPX(DriveConstants.kMiddleRightMotor); 
+  private WPI_VictorSPX leftMotorOfH_Wheel = new WPI_VictorSPX(DriveConstants.kMiddleLeftMotor);
+  private WPI_VictorSPX rightMotorOfH_Wheel = new WPI_VictorSPX(DriveConstants.kMiddleRightMotor);
 
-  private double kEncoderTick2Meters = DriveConstants.kEncoderTick2Meter; 
-                                                                          
+  private double kEncoderTick2Meters = DriveConstants.kEncoderTick2Meter;
   private DifferentialDrive drive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 
   private TalonSRXSimCollection rightMotorSim = rightFrontMotor.getSimCollection();
   private TalonSRXSimCollection leftMotorSim = leftFrontMotor.getSimCollection();
+
+  // Brake mode (the motor attempts to slow electrically) reduces wheel slip
+  private final NeutralMode motorMode = NeutralMode.Brake;
 
   public void arcadeDrive(double speedX, double speedY, double zRotation) {
     drive.arcadeDrive(speedY, zRotation);
@@ -54,6 +54,16 @@ public class DriveSubsystem extends SubsystemBase {
 
     backLeftMotor.follow(leftFrontMotor);
     backRightMotor.follow(rightFrontMotor);
+
+    leftFrontMotor.setNeutralMode(motorMode);
+    rightFrontMotor.setNeutralMode(motorMode);
+    backLeftMotor.setNeutralMode(motorMode);
+    backRightMotor.setNeutralMode(motorMode);
+
+    leftFrontMotor.configNeutralDeadband(0.001);
+    rightFrontMotor.configNeutralDeadband(0.001);
+    backLeftMotor.configNeutralDeadband(0.001);
+    backRightMotor.configNeutralDeadband(0.001);
 
     leftMotorOfH_Wheel.follow(rightMotorOfH_Wheel);
   }
