@@ -1,10 +1,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants; 
@@ -24,6 +27,9 @@ public class DriveSubsystem extends SubsystemBase {
   private double kEncoderTick2Meters = DriveConstants.kEncoderTick2Meter; 
                                                                           
   private DifferentialDrive drive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
+
+  private TalonSRXSimCollection rightMotorSim = rightFrontMotor.getSimCollection();
+  private TalonSRXSimCollection leftMotorSim = leftFrontMotor.getSimCollection();
 
   public void arcadeDrive(double speedX, double speedY, double zRotation) {
     drive.arcadeDrive(speedY, zRotation);
@@ -54,6 +60,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double getEncoderMeters() {
     return (leftFrontMotor.getSelectedSensorPosition() + -rightFrontMotor.getSelectedSensorPosition()) / 2 * kEncoderTick2Meters;
+
   }
 
   @Override
