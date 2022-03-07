@@ -73,6 +73,7 @@ public class RobotContainer {
 
     new JoystickButton(joystick1, OIConstants.kClimberButtonUpIdx)
             .whenPressed(new ClimberCmd(climberSubsystem, 1));
+            
     new JoystickButton(joystick1, OIConstants.kClimberButtonDownIdx)
             .whileActiveOnce(new ClimberCmd(climberSubsystem, -1));
 
