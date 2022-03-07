@@ -12,7 +12,7 @@ public class ToggleManagementCmd extends CommandBase {
   private boolean open;
 
   public ToggleManagementCmd(ManagementSubsystem managementSubsystem) {
-    this.open = false;
+    this.open = true; // false?
     this.managementSubsystem = managementSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,7 +22,7 @@ public class ToggleManagementCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.open = !this.open;
+    //this.open = !this.open;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,7 +32,10 @@ public class ToggleManagementCmd extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    managementSubsystem.toggleManagement(false);
+
+  }
 
   // Returns true when the command should end.
   @Override
