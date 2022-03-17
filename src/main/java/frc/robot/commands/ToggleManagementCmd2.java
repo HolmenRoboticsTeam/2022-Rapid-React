@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ManagementConstants;
 import frc.robot.subsystems.ManagementSubsystem;
 
-public class ToggleManagementCmd extends CommandBase {
+public class ToggleManagementCmd2 extends CommandBase {
   private final ManagementSubsystem managementSubsystem;
   private boolean open;
 
-  public ToggleManagementCmd(ManagementSubsystem managementSubsystem) {
+  public ToggleManagementCmd2(ManagementSubsystem managementSubsystem) {
     this.open = true; // false?
     this.managementSubsystem = managementSubsystem;
 
@@ -29,7 +29,7 @@ public class ToggleManagementCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    managementSubsystem.toggleManagement(ManagementConstants.kSpeed);
+    managementSubsystem.toggleManagement(ManagementConstants.kSpeedAlt);
   }
 
   @Override

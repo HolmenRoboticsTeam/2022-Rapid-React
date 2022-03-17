@@ -13,12 +13,8 @@ public class ManagementSubsystem extends SubsystemBase {
   @Override
   public void periodic() {} //
 
-  public void toggleManagement(boolean open){
-    if (open) {
-      managementMotor.set(ManagementConstants.kSpeed);
-    }else{
-      managementMotor.set(0);
-    }
+  public void toggleManagement(Double speed){
+      managementMotor.set(speed);
 
   }
 }

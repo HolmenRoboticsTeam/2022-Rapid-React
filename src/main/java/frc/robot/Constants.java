@@ -17,7 +17,7 @@ public final class Constants {
         public static final int kMiddleLeftMotor = 2; // for the H-drive                     Victor 2
         public static final int kBackRightMotor = 0; // for the tank                        Victor 0
         public static final int kMiddleRightMotor = 1; // for the H-drive                   Victor 1
-        public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.128 * Math.PI;
+        public static final double kEncoderTick2Meter = 4096.0 * 1.0 * 0.2032 * Math.PI;
 // autonomus
         public static final double kAutoDriveForwardSpeed = 0.5;
         public static final double kAutoDriveForwardDistance = 1.5;
@@ -38,8 +38,9 @@ public final class Constants {
 
     public static final class ManagementConstants {
         public static final int kManagementMotorPort = 4; //            Victor 4
-
-        public static final double kSpeed = 0.1;
+// get intake and management to run together
+        public static final double kSpeed = 1;
+        public static final double kSpeedAlt = -0.25;
     }
 
     public static final class OIConstants {
@@ -52,7 +53,9 @@ public final class Constants {
 
         public static final int kIntakeButtonIdx = 5; // left middle button: RIGHT JOYSTICK
 
-        public static final int kManagementButtonIdx = 3; // left bottom button: RIGHT JOYSTICK
+        public static final int kManagementButtonIdx = 4; // Goes Fast
+        public static final int kManagementButton2 = 6; // Goes Slow
+        public static final int kManagementAndIntakeIdx = 3; // Has both intake and management run at the same time
 
         public static final int kShooterButtonIdx = 1; // right trigger: RIGHT JOYSTICK (parallels with the management)
 

@@ -69,12 +69,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getEncoderMeters() {
-    return (leftFrontMotor.getSelectedSensorPosition() + -rightFrontMotor.getSelectedSensorPosition()) / 2 * kEncoderTick2Meters;
+    return (leftFrontMotor.getSelectedSensorPosition() + rightFrontMotor.getSelectedSensorPosition() / 2.0) / 4096.0 * 1.0 * (0.2032 * Math.PI) * (2.0/3.0);
 
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator encoder value", getEncoderMeters());
+    SmartDashboard.putNumber("Drive encoder value", getEncoderMeters());
   } //
 }

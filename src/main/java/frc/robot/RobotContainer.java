@@ -9,7 +9,10 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberCmd;
@@ -18,6 +21,8 @@ import frc.robot.commands.RotateShooterCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.ToggleIntakeCmd;
 import frc.robot.commands.ToggleManagementCmd;
+import frc.robot.commands.ToggleManagementCmd2;
+import frc.robot.commands.autoDriveForward;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -53,9 +58,10 @@ public class RobotContainer {
       configureButtonBindings();
 
       driveSubsystem.setDefaultCommand(
-        new DriveCmd(driveSubsystem, () -> -this.joystick2.getY(), () -> this.joystick1.getX(), () -> this.joystick2.getX()));
+        new DriveCmd(driveSubsystem, () -> -this.joystick2.getY(), () -> this.joystick1.getX()*0.75, () -> this.joystick2.getX()*0.80));
 
       shooterRotationSubsystem.setDefaultCommand(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, true)); // set to constantly track reflective tape
+
   }
 
   /**
@@ -79,6 +85,14 @@ public class RobotContainer {
 
     new JoystickButton(joystick2, OIConstants.kRotationButtonIdx)
             .whenPressed(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, false));
+
+        new JoystickButton(joystick2, OIConstants.kManagementButton2)
+        .whenHeld(new ToggleManagementCmd2(managementSubsystem));
+        
+        new JoystickButton(joystick2, OIConstants.kManagementAndIntakeIdx)
+        .whenHeld(new ToggleIntakeCmd(intakeSubsystem))
+        .whenHeld(new ToggleManagementCmd(managementSubsystem));
+
 }
 
   /**
@@ -86,10 +100,14 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  /*public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }*/
+    new SequentialCommandGroup(new autoDriveForward(driveSubsystem, 0.5), 
+        new ParallelCommandGroup(new IntakeSubsystemOn(intakeSubsystem), 
+        new ManagementSubsystemOn(managementSubsystem)));
+        
+                return null;
+  }
 }
 /*
         elevatorSubsystem.setDefaultCommand(new ElevatorJoystickCmd(elevatorSubsystem, 0));
