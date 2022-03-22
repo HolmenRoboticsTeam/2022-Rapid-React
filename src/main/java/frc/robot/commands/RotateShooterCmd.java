@@ -51,11 +51,10 @@ public class RotateShooterCmd extends CommandBase {
     double minimumSpeed = SmartDashboard.getNumber("Shooter Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
     double maximumSpeed = SmartDashboard.getNumber("Shooter Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
     //double rotationSlowDownAngle = SmartDashboard.getNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
-    
+
     double speed = -pid.calculate(tX, 0);
 
     speed = MathUtil.clamp(speed, minimumSpeed, maximumSpeed);
-    System.out.println(speed);
     shooterRotationSubsystem.ShooterRotation(speed);
 
       double tY = this.limeLight.getDoubleTY();

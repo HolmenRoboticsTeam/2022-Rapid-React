@@ -5,22 +5,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase{
-  private WPI_TalonSRX shootorMotor = new WPI_TalonSRX(ShooterConstants.kShootertMotorPort);
+  // private double gearBoxRatio = ShooterConstants.kConstantGearRatio;
+  // private double gearDiameter = ShooterConstants.kGearDiameter;
 
-    public ShooterSubsystem() {}
+  private WPI_TalonSRX shooterMotorFront = new WPI_TalonSRX(ShooterConstants.kShootertMotorPortFront);
+  private WPI_TalonSRX shooterMotorBack = new WPI_TalonSRX(ShooterConstants.kShooterMotorPortBack);
 
+    public ShooterSubsystem() {
+      shooterMotorFront.configFactoryDefault();
+      shooterMotorBack.configFactoryDefault();
+    }
+
+    //public double getSpeedMeters() {
+     // return (shootorMotor.getSelectedSensorVelocity() / 4096.0 * gearBoxRatio * (gearDiameter * Math.PI));
+     // (kMaxRPM  / 600) * (kSensorUnitsPerRotation / kGearRatio)
+    // }
     @Override
     public void periodic() {} //
 
-    public void ShooterOn(boolean on) {
-      if (on) {
-        shootorMotor.set(ShooterConstants.shooterRunSpeed);
-      } else {
-        shootorMotor.set(ShooterConstants.shooterStopSpeed);
-      }
+    public void setMotor(double speed){
+      shooterMotorFront.set(speed);
+      shooterMotorBack.set(-speed);
     }
-    
-    public void ShooterRotation(double speed){
-      shootorMotor.set(speed * ShooterConstants.shooterRotationRunSpeed);
-    }
+
 }

@@ -30,7 +30,7 @@ public class DriveCmd extends CommandBase {
 
   @Override
   public void execute() {
-    this.driveSubsystem.arcadeDrive(getXAxis.get(), getYAxis.get(), getZRotation.get());
+    this.driveSubsystem.arcadeDrive(-getXAxis.get(), getYAxis.get(), getZRotation.get());
   }
 
   @Override

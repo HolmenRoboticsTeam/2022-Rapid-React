@@ -27,7 +27,7 @@ public final class Constants {
         public static final int kLeftMotorPort = 5; //                  Victor 5
         public static final int kRightMotorPort = 11; // uneeded
 
-        public static final double kSpeed = 0.5;
+        public static final double kSpeed = 0.75;
     }
 
     public static final class ClimberConstants {
@@ -54,7 +54,7 @@ public final class Constants {
         public static final int kIntakeButtonIdx = 5; // left middle button: RIGHT JOYSTICK
 
         public static final int kManagementButtonIdx = 4; // Goes Fast
-        public static final int kManagementButton2 = 6; // Goes Slow
+        public static final int kManagementButton2 = 6; // Goes backwards
         public static final int kManagementAndIntakeIdx = 3; // Has both intake and management run at the same time
 
         public static final int kShooterButtonIdx = 1; // right trigger: RIGHT JOYSTICK (parallels with the management)
@@ -71,8 +71,10 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int kShootertMotorPort = 11;
-        public static final double shooterRunSpeed = 1;
+        public static final int kShootertMotorPortFront = 0;
+        public static final int kShooterMotorPortBack = 4;
+
+        public static final double shooterRunSpeed = 0.5;
         public static final double shooterStopSpeed = 0;
 
         public static final int kShooterRotationMotorPort = 3; // elevator motor
@@ -89,6 +91,13 @@ public final class Constants {
         public static final double kLimeLightHeightFromGround = 5.5; // ft
         public static final double kHeightOfTarget = 8.8; // ft
         public static final double kPControlConstant = -0.1;
+
+        // :(
+        public static final double kGearDiameter = 0.31;
+        public static final double kConstantGearRatio = 129.23;
+        public static final double kMaxRPM = 0;
+        public static final double kUnitsPerRotation = 0;
+
     }
 
     //          /* currently not being used */

@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveConstants; 
+import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -25,8 +25,8 @@ public class DriveSubsystem extends SubsystemBase {
   private double kEncoderTick2Meters = DriveConstants.kEncoderTick2Meter;
   private DifferentialDrive drive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 
-  private TalonSRXSimCollection rightMotorSim = rightFrontMotor.getSimCollection();
-  private TalonSRXSimCollection leftMotorSim = leftFrontMotor.getSimCollection();
+  //private TalonSRXSimCollection rightMotorSim = rightFrontMotor.getSimCollection();         // simulator stuff
+  //private TalonSRXSimCollection leftMotorSim = leftFrontMotor.getSimCollection();           // simulator stuff
 
   // Brake mode (the motor attempts to slow electrically) reduces wheel slip
   private final NeutralMode motorMode = NeutralMode.Brake;
@@ -70,7 +70,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double getEncoderMeters() {
     return (leftFrontMotor.getSelectedSensorPosition() + rightFrontMotor.getSelectedSensorPosition() / 2.0) / 4096.0 * 1.0 * (0.2032 * Math.PI) * (2.0/3.0);
-
+// raw value / 4096 * gear ratio * (diameter * pi)
+// diameter = 12.051
   }
 
   @Override
