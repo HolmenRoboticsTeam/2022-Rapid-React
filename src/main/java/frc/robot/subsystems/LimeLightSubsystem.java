@@ -8,19 +8,21 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 public class LimeLightSubsystem extends SubsystemBase {
   private final NetworkTable table;
-  private final NetworkTableEntry tx;
-  private final NetworkTableEntry ty;
-  private final NetworkTableEntry ta;
+  private final NetworkTableEntry tx;  // x-offset in degrees
+  private final NetworkTableEntry ty;  // y-offset in degrees
+  private final NetworkTableEntry ta;  // area of target
+  private final NetworkTableEntry tv;  // boolean, has any target?
 
   public LimeLightSubsystem() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");
-
+    tv = table.getEntry("tv");
   }
 
   public double getDoubleTX() {
@@ -35,10 +37,18 @@ public class LimeLightSubsystem extends SubsystemBase {
     return (ta.getDouble(0.0));
   }
 
-  public boolean findTarget() {
-    return (this.getDoubleTA() > 0 || this.getDoubleTX() > 0 || this.getDoubleTY() > 0);
+  public double getDistanceToTargetMeters() {
+    double tY = getDoubleTY();
+    double angleToGoalDegrees = (ShooterConstants.kLimelightMountAngle + tY);
+    double angleToGoalRadians = (angleToGoalDegrees * (Math.PI / 180.0));
+
+    return ((ShooterConstants.kHeightOfTargetMeters - ShooterConstants.kLimeLightHeightFromGroundMeters) / (Math.tan(angleToGoalRadians)));
   }
-  
+
+  public Number hasTarget() {
+    return tv.getNumber(0);
+  }
+
   @Override
   public void periodic() {} //
 }

@@ -5,39 +5,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class ToggleIntakeCmd extends CommandBase {
+public class RunIntakeCmd extends CommandBase {
 
-  private final IntakeSubsystem toggleIntakeSubsystem;
-  private boolean open;
+  private final IntakeSubsystem intakeSubsystem;
 
-  public ToggleIntakeCmd(IntakeSubsystem toggleIntakeSubsystem) {
-
-    this.open = true;
-    this.toggleIntakeSubsystem = toggleIntakeSubsystem;
-
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(toggleIntakeSubsystem);
+  public RunIntakeCmd(IntakeSubsystem intakeSubsystem) {
+    this.intakeSubsystem = intakeSubsystem;
+    addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-   // this.open = !this.open; //true
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    toggleIntakeSubsystem.setPosition(open);
+    intakeSubsystem.setMotor(IntakeConstants.kSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    toggleIntakeSubsystem.setPosition(false);
+    intakeSubsystem.setMotor(0);
   }
 
   // Returns true when the command should end.

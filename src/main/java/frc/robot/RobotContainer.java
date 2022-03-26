@@ -14,23 +14,25 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.ManagementConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AngleShooterCmd;
 import frc.robot.commands.AutoDriveToTarget;
-import frc.robot.commands.ClimberCmd;
+import frc.robot.commands.RunClimberCmd;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.RotateShooterCmd;
 import frc.robot.commands.ShooterCmd;
-import frc.robot.commands.ToggleIntakeCmd;
-import frc.robot.commands.ToggleManagementCmd;
-import frc.robot.commands.ToggleManagementCmd2;
-// import frc.robot.commands.autoDriveForward;
+import frc.robot.commands.RunIntakeCmd;
+import frc.robot.commands.RunManagementCmd;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.ManagementSubsystem;
 import frc.robot.subsystems.ShooterRotationSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShooterFlywheelSubsystem;
+import frc.robot.subsystems.ShooterAngleSubsystem;
 
 public class RobotContainer {
 
@@ -40,13 +42,13 @@ public class RobotContainer {
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ManagementSubsystem managementSubsystem = new ManagementSubsystem();
-  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final ShooterFlywheelSubsystem shooterSubsystem = new ShooterFlywheelSubsystem();
+  private final ShooterAngleSubsystem shooterVerticalSubsystem = new ShooterAngleSubsystem();
   private final ShooterRotationSubsystem shooterRotationSubsystem = new ShooterRotationSubsystem();
   private final LimeLightSubsystem limelightSubsystem = new LimeLightSubsystem();
 
-  private final Joystick joystick1 = new Joystick(OIConstants.kDriverJoystickPort); // left joystick
-
-  private final Joystick joystick2 = new Joystick(OIConstants.kDriverJoystickPort2); // right joystick
+  private final Joystick leftHandedJoystick = new Joystick(OIConstants.kLeftHandedJoystickPort);
+  private final Joystick rightHandedJoystick = new Joystick(OIConstants.kRightHandedJoystickPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -57,16 +59,21 @@ public class RobotContainer {
     configureButtonBindings();
 
     driveSubsystem.setDefaultCommand(
-        new DriveCmd(driveSubsystem,
-          () -> -this.joystick2.getY(),                                 // Forwards & Backwards movement
-          () -> this.joystick1.getX() * 0.75,                           // H-Drive???
-          () -> this.joystick2.getX() * 0.80));                         // Side to Side movement
-
-    shooterRotationSubsystem
-        .setDefaultCommand(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, true)); // set to
-                                                                                                      // constantly
-                                                                                                      // track
-                                                                                                      // reflective tape
+      new DriveCmd(
+        driveSubsystem,
+        () -> this.rightHandedJoystick.getY(),  // Forward-Back
+        () -> this.leftHandedJoystick.getX() * 0.75,  // Straffe Left-Right
+        () -> this.rightHandedJoystick.getX() * 0.80  // Rotate
+      )
+    );
+    shooterRotationSubsystem.setDefaultCommand(
+      new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, leftHandedJoystick)
+    );
+    shooterVerticalSubsystem.setDefaultCommand(
+      new AngleShooterCmd(shooterVerticalSubsystem, () -> limelightSubsystem.getDoubleTA(), leftHandedJoystick)
+    );
+    shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, rightHandedJoystick));
+    climberSubsystem.setDefaultCommand(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
 
     camera1.setResolution(160, 120);
     camera1.setFPS(30);
@@ -81,31 +88,33 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(joystick2, OIConstants.kIntakeButtonIdx)
-        .whenHeld(new ToggleIntakeCmd(intakeSubsystem));
+    // Run intake when button is held
+    new JoystickButton(rightHandedJoystick, OIConstants.kIntakeButtonIdx)
+      .whenHeld(new RunIntakeCmd(intakeSubsystem));
 
-    new JoystickButton(joystick2, OIConstants.kManagementButtonIdx)
-        .whenHeld(new ToggleManagementCmd(managementSubsystem));
+    // Run management forward when button is held
+    new JoystickButton(rightHandedJoystick, OIConstants.kManagementButtonIdx)
+      .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeed));
 
-    new JoystickButton(joystick1, OIConstants.kClimberButtonUpIdx)
-        .whenPressed(new ClimberCmd(climberSubsystem, 1));
+    // Run management backwards when button is held
+    new JoystickButton(rightHandedJoystick, OIConstants.kManagementButton2)
+      .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeedAlt));
 
-    new JoystickButton(joystick1, OIConstants.kClimberButtonDownIdx)
-        .whileActiveOnce(new ClimberCmd(climberSubsystem, -1));
+    // Extend climber when button is held
+    // new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonUpIdx)
+    //   .whenHeld(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
 
-    new JoystickButton(joystick2, OIConstants.kRotationButtonIdx)
-        .whenPressed(new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, false));
+    // // Retract climber when button is held
+    // new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonDownIdx)
+    //   .whenHeld(new RunClimberCmd(climberSubsystem,  ClimberConstants.kRetractSpeed, leftHandedJoystick));
 
-    new JoystickButton(joystick2, OIConstants.kShooterButtonIdx)
-        .whenHeld(new ShooterCmd(shooterSubsystem));
+    // new JoystickButton(joystick2, OIConstants.kShooterButtonIdx)
+    //     .whenHeld(new ShooterCmd(shooterSubsystem));
 
-    new JoystickButton(joystick2, OIConstants.kManagementButton2)
-        .whenHeld(new ToggleManagementCmd2(managementSubsystem));
-
-    new JoystickButton(joystick2, OIConstants.kManagementAndIntakeIdx)
-        .whenHeld(new ToggleIntakeCmd(intakeSubsystem))
-        .whenHeld(new ToggleManagementCmd(managementSubsystem));
-
+    // Run intake and management simultaneously
+    new JoystickButton(rightHandedJoystick, OIConstants.kManagementAndIntakeIdx)
+        .whenHeld(new RunIntakeCmd(intakeSubsystem))
+        .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeed));
   }
 
   /**
@@ -115,10 +124,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    System.out.println("Running autonomous");
     return new SequentialCommandGroup(
-      new AutoDriveToTarget(this.driveSubsystem, 2.0),
-      new AutoDriveToTarget(this.driveSubsystem, 0.0)
+      new AutoDriveToTarget(this.driveSubsystem, -2.0)
     );
   }
 }

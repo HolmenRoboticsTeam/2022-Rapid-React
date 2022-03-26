@@ -6,7 +6,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class AutoDriveToTarget extends CommandBase {
@@ -38,16 +40,19 @@ public class AutoDriveToTarget extends CommandBase {
   public void execute() {
     double distanceCovered = this.driveSubsystem.getEncoderMeters();
     double speedY = this.pidController.calculate(distanceCovered);
-    speedY = MathUtil.clamp(speedY, -0.65, 0.65);  // might be a little fast
-    System.out.println(speedY);
+    speedY = MathUtil.clamp(speedY, -DriveConstants.kAutoDriveForwardSpeed, DriveConstants.kAutoDriveForwardSpeed);
 
     this.driveSubsystem.arcadeDrive(0.0, speedY, 0.0);
+
+    SmartDashboard.putNumber("Auto Drive Distance Covered", distanceCovered);
+    SmartDashboard.putNumber("Auto Drive Distance Remaining", this.targetDistance - distanceCovered);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     this.driveSubsystem.arcadeDrive(0.0, 0.0, 0.0);
+    SmartDashboard.putNumber("Auto Drive Speed", 0);
   }
 
   // Returns true when the command should end.

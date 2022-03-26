@@ -8,34 +8,30 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ManagementConstants;
 import frc.robot.subsystems.ManagementSubsystem;
 
-public class ToggleManagementCmd2 extends CommandBase {
+public class RunManagementCmd extends CommandBase {
   private final ManagementSubsystem managementSubsystem;
-  private boolean open;
+  private final double speed;
 
-  public ToggleManagementCmd2(ManagementSubsystem managementSubsystem) {
-    this.open = true; // false?
+  public RunManagementCmd(ManagementSubsystem managementSubsystem, double speed) {
     this.managementSubsystem = managementSubsystem;
+    this.speed = speed;
 
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(managementSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    //this.open = !this.open;
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    managementSubsystem.toggleManagement(ManagementConstants.kSpeedAlt);
+    managementSubsystem.setMotor(speed);
   }
 
   @Override
   public void end(boolean interrupted) {
-    managementSubsystem.toggleManagement(0.0);
-
+    managementSubsystem.setMotor(0.0);
   }
 
   // Returns true when the command should end.

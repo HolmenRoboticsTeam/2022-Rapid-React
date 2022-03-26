@@ -4,30 +4,38 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 
-public class ClimberCmd extends CommandBase {
+public class RunClimberCmd extends CommandBase {
   private final ClimberSubsystem climberSubsystem;
-  private int direction;
-  /** Creates a new ClimberCmd. */
-  public ClimberCmd(ClimberSubsystem climberSubsystem, int direction) {
-    this.climberSubsystem = climberSubsystem;
-    addRequirements(climberSubsystem);
+  private final double speed;
+  private Joystick stick;
 
-    this.direction = direction;
+  /** Creates a new ClimberCmd. */
+  public RunClimberCmd(ClimberSubsystem climberSubsystem, double speed, Joystick stick) {
+    this.climberSubsystem = climberSubsystem;
+    this.speed = speed;
+    this.stick = stick;
+
+    addRequirements(climberSubsystem);
   }
 
   @Override
-  public void initialize() {} //
+  public void initialize() {}
 
   @Override
   public void execute() {
-    climberSubsystem.setDirection(direction);
-      }
+    climberSubsystem.setMotor(stick.getRawAxis(3));
+    // climberSubsystem.setMotor(speed);
+  }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    climberSubsystem.setMotor(0);
+  }
 
   // Returns true when the command should end.
   @Override

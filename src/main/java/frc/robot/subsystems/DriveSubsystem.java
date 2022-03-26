@@ -19,22 +19,13 @@ public class DriveSubsystem extends SubsystemBase {
   private WPI_VictorSPX backRightMotor = new WPI_VictorSPX(DriveConstants.kBackRightMotor);
 
   // H-Drive portion of code
-  private WPI_VictorSPX leftMotorOfH_Wheel = new WPI_VictorSPX(DriveConstants.kMiddleLeftMotor);
-  private WPI_VictorSPX rightMotorOfH_Wheel = new WPI_VictorSPX(DriveConstants.kMiddleRightMotor);
+  private WPI_VictorSPX hWheelLeftMotor = new WPI_VictorSPX(DriveConstants.kMiddleLeftMotor);
+  private WPI_VictorSPX hWheelRightMotor = new WPI_VictorSPX(DriveConstants.kMiddleRightMotor);
 
-  private double kEncoderTick2Meters = DriveConstants.kEncoderTick2Meter;
   private DifferentialDrive drive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
-
-  //private TalonSRXSimCollection rightMotorSim = rightFrontMotor.getSimCollection();         // simulator stuff
-  //private TalonSRXSimCollection leftMotorSim = leftFrontMotor.getSimCollection();           // simulator stuff
 
   // Brake mode (the motor attempts to slow electrically) reduces wheel slip
   private final NeutralMode motorMode = NeutralMode.Brake;
-
-  public void arcadeDrive(double speedX, double speedY, double zRotation) {
-    drive.arcadeDrive(speedY, zRotation);
-    rightMotorOfH_Wheel.set(speedX);
-  }
 
   public DriveSubsystem() {
     leftFrontMotor.configFactoryDefault();
@@ -65,17 +56,24 @@ public class DriveSubsystem extends SubsystemBase {
     backLeftMotor.configNeutralDeadband(0.001);
     backRightMotor.configNeutralDeadband(0.001);
 
-    leftMotorOfH_Wheel.follow(rightMotorOfH_Wheel);
+    hWheelLeftMotor.follow(hWheelRightMotor);
+  }
+
+  public void arcadeDrive(double speedX, double speedY, double zRotation) {
+    drive.arcadeDrive(speedY, zRotation);
+    hWheelRightMotor.set(speedX);
   }
 
   public double getEncoderMeters() {
     return (leftFrontMotor.getSelectedSensorPosition() + rightFrontMotor.getSelectedSensorPosition() / 2.0) / 4096.0 * 1.0 * (0.2032 * Math.PI) * (2.0/3.0);
-// raw value / 4096 * gear ratio * (diameter * pi)
-// diameter = 12.051
+    // raw value / 4096 * gear ratio * (diameter * pi)
+    // diameter = 12.051
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Drive encoder value", getEncoderMeters());
-  } //
+    SmartDashboard.putNumber("Drive Train Left Speed", leftFrontMotor.get());
+    SmartDashboard.putNumber("Drive Train Right Speed", rightFrontMotor.get());
+    SmartDashboard.putNumber("Drive Train H-Wheel Speed", hWheelRightMotor.get());
+  }
 }

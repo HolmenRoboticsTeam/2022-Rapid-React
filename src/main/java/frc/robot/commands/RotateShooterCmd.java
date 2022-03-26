@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
@@ -13,61 +14,60 @@ import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.ShooterRotationSubsystem;
 
 public class RotateShooterCmd extends CommandBase {
-  /** Creates a new RotateShooterCmd. */
   private final ShooterRotationSubsystem shooterRotationSubsystem;
   private final LimeLightSubsystem limeLight;
-  private PIDController pid = new PIDController(0.03, 0, 0.0005);
-  //private boolean limelightOn; // For if we want to assign a button to turn on the rotating part
+  private PIDController pid = new PIDController(0.04, 0, 0.0005);
+  private boolean spinLock = false;  // When true, the turret is turning 180 degrees; do not allow other PID input to override it's operation
+  Joystick stick;
 
-  public RotateShooterCmd(ShooterRotationSubsystem shooterRotationSubsystem, LimeLightSubsystem limeLight, boolean limelightOn) {
+  /** Creates a new RotateShooterCmd. */
+  public RotateShooterCmd(ShooterRotationSubsystem shooterRotationSubsystem, LimeLightSubsystem limeLight, Joystick stick) {
 
     this.shooterRotationSubsystem = shooterRotationSubsystem;
     this.limeLight = limeLight;
+    this.stick = stick;
     pid.disableContinuousInput();
-    //this.limelightOn = limelightOn;
 
     SmartDashboard.putNumber("Shooter Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
     SmartDashboard.putNumber("Shooter Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
     SmartDashboard.putNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
-    shooterRotationSubsystem.RotationToggle(limelightOn);
 
     addRequirements(shooterRotationSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // this.limelightOn = !this.limelightOn;
-
+    SmartDashboard.putNumber("Shooter Rotation X-Angle Offset", 0);
+    SmartDashboard.putNumber("Shooter Rotation PID Speed", 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // if (this.limeLight.hasTarget() == (Number)1.0) {
+      double tX = this.limeLight.getDoubleTX();
 
-    double tX = this.limeLight.getDoubleTX();
+      double speed = pid.calculate(tX, 0);
+      speed = MathUtil.clamp(speed, -0.3, 0.3);
+      SmartDashboard.putNumber("Shooter Rotation X-Angle Offset", tX);
+      SmartDashboard.putNumber("Shooter Rotation PID Speed", speed);
+      SmartDashboard.putNumber("Distance to Target Meters", this.limeLight.getDistanceToTargetMeters());
 
-    double minimumSpeed = SmartDashboard.getNumber("Shooter Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
-    double maximumSpeed = SmartDashboard.getNumber("Shooter Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
-    //double rotationSlowDownAngle = SmartDashboard.getNumber("Shooter Rotation Slow Down Angle", ShooterConstants.rotationConstantAngle);
-
-    double speed = -pid.calculate(tX, 0);
-
-    speed = MathUtil.clamp(speed, minimumSpeed, maximumSpeed);
-    shooterRotationSubsystem.ShooterRotation(speed);
-
-      double tY = this.limeLight.getDoubleTY();
-      double angleToGoalDegrees = (ShooterConstants.kLimeLightAngle + tY);
-      double angleToGoalRadians = (angleToGoalDegrees * (Math.PI/180.0));
-
-      double distanceFromLimelightToGoalInches = ((ShooterConstants.kHeightOfTarget - ShooterConstants.kLimeLightHeightFromGround)/(Math.tan(angleToGoalRadians)));
-
-    }
+      shooterRotationSubsystem.setMotor(speed); // TODO: replace with speed
+      if (!spinLock) {
+        // Logic to determine if to spin the turret
+        // This should be based on the angle of the gyro
+        // When the angle of gyro (robot's rotation) exceeds 180 degrees, the turret should spin to the opposite bound
+      }
+    // }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooterRotationSubsystem.setMotor(0);
+  }
 
   // Returns true when the command should end.
   @Override

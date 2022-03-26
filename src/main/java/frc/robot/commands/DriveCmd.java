@@ -13,20 +13,17 @@ public class DriveCmd extends CommandBase {
   private final DriveSubsystem driveSubsystem;
   private final Supplier<Double> getXAxis, getYAxis, getZRotation;
 
-
   public DriveCmd(DriveSubsystem driveSubsystem, Supplier<Double> getYAxis, Supplier<Double> getXAxis, Supplier<Double> getZRotation) {
-    // This intitializes it
     this.driveSubsystem = driveSubsystem;
     this.getYAxis = getYAxis;
     this.getXAxis = getXAxis;
     this.getZRotation = getZRotation;
 
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSubsystem);
   }
 
   @Override
-  public void initialize() {} //
+  public void initialize() {}
 
   @Override
   public void execute() {
@@ -34,7 +31,9 @@ public class DriveCmd extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    this.driveSubsystem.arcadeDrive(0, 0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
