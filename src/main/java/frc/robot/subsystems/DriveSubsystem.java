@@ -19,8 +19,8 @@ public class DriveSubsystem extends SubsystemBase {
   private WPI_VictorSPX backRightMotor = new WPI_VictorSPX(DriveConstants.kBackRightMotor);
 
   // H-Drive portion of code
-  private WPI_VictorSPX hWheelLeftMotor = new WPI_VictorSPX(DriveConstants.kMiddleLeftMotor);
-  private WPI_VictorSPX hWheelRightMotor = new WPI_VictorSPX(DriveConstants.kMiddleRightMotor);
+  //private WPI_VictorSPX hWheelLeftMotor = new WPI_VictorSPX(DriveConstants.kMiddleLeftMotor);
+  //private WPI_VictorSPX hWheelRightMotor = new WPI_VictorSPX(DriveConstants.kMiddleRightMotor);
 
   private DifferentialDrive drive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 
@@ -56,12 +56,12 @@ public class DriveSubsystem extends SubsystemBase {
     backLeftMotor.configNeutralDeadband(0.001);
     backRightMotor.configNeutralDeadband(0.001);
 
-    hWheelLeftMotor.follow(hWheelRightMotor);
+    //hWheelLeftMotor.follow(hWheelRightMotor);
   }
 
   public void arcadeDrive(double speedX, double speedY, double zRotation) {
     drive.arcadeDrive(speedY, zRotation);
-    hWheelRightMotor.set(speedX);
+    //hWheelRightMotor.set(speedX);
   }
 
   public double getEncoderMeters() {
@@ -74,6 +74,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Drive Train Left Speed", leftFrontMotor.get());
     SmartDashboard.putNumber("Drive Train Right Speed", rightFrontMotor.get());
-    SmartDashboard.putNumber("Drive Train H-Wheel Speed", hWheelRightMotor.get());
+    //SmartDashboard.putNumber("Drive Train H-Wheel Speed", hWheelRightMotor.get());
   }
 }

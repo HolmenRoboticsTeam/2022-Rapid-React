@@ -62,17 +62,18 @@ public class RobotContainer {
       new DriveCmd(
         driveSubsystem,
         () -> this.rightHandedJoystick.getY(),  // Forward-Back
-        () -> this.leftHandedJoystick.getX() * 0.75,  // Straffe Left-Right
+        () -> this.leftHandedJoystick.getX() * 0.0,  // Straffe Left-Right (not needed anymore)
         () -> this.rightHandedJoystick.getX() * 0.80  // Rotate
       )
     );
+
     shooterRotationSubsystem.setDefaultCommand(
-      new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem, leftHandedJoystick)
+      new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem)
     );
+    
     shooterVerticalSubsystem.setDefaultCommand(
       new AngleShooterCmd(shooterVerticalSubsystem, () -> limelightSubsystem.getDoubleTA(), leftHandedJoystick)
     );
-    shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, rightHandedJoystick));
     climberSubsystem.setDefaultCommand(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
 
     camera1.setResolution(160, 120);
@@ -108,8 +109,8 @@ public class RobotContainer {
     // new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonDownIdx)
     //   .whenHeld(new RunClimberCmd(climberSubsystem,  ClimberConstants.kRetractSpeed, leftHandedJoystick));
 
-    // new JoystickButton(joystick2, OIConstants.kShooterButtonIdx)
-    //     .whenHeld(new ShooterCmd(shooterSubsystem));
+    new JoystickButton(rightHandedJoystick, OIConstants.kShooterButtonIdx)
+        .whenHeld(new ShooterCmd(shooterSubsystem, rightHandedJoystick));
 
     // Run intake and management simultaneously
     new JoystickButton(rightHandedJoystick, OIConstants.kManagementAndIntakeIdx)

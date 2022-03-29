@@ -14,9 +14,9 @@ public final class Constants {
         public static final int kLeftFrontMotor = 1; // Talons (gets feedback)              Talon 1
         public static final int kRightFrontMotor = 2; // The unmarked motor                 Talon 2
         public static final int kBackLeftMotor = 6; // for the tank                         Victor 6
-        public static final int kMiddleLeftMotor = 1; // for the H-drive                     Victor 1
+        //public static final int kMiddleLeftMotor = 1; // for the H-drive                     Victor 1
         public static final int kBackRightMotor = 3; // for the tank                        Victor 3
-        public static final int kMiddleRightMotor = 2; // for the H-drive                   Victor 2
+        //public static final int kMiddleRightMotor = 2; // for the H-drive                   Victor 2
         public static final double kEncoderTick2Meter = 4096.0 * 1.0 * 0.2032 * Math.PI;
 
         // autonomus

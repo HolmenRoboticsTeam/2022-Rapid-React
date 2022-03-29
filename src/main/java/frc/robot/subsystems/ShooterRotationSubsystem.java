@@ -23,7 +23,7 @@ public class ShooterRotationSubsystem extends SubsystemBase {
     shooterRotationMotor.configFactoryDefault();
     shooterRotationMotor.setNeutralMode(NeutralMode.Brake);  // Try to maintain the position when stopped
     shooterRotationMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    shooterRotationMotor.setSensorPhase(true);  // If CW rotation is decreasing encoder, set to false
+    shooterRotationMotor.setSensorPhase(true);  // If CW(clockwise) rotation is decreasing encoder, set to false
     shooterRotationMotor.setSelectedSensorPosition(0);
     gyro.reset();
   }
@@ -32,6 +32,7 @@ public class ShooterRotationSubsystem extends SubsystemBase {
     // Prevent the turret from exceeding its limits
     double encoderRaw = shooterRotationMotor.getSelectedSensorPosition();
     boolean encoderIncreasing = speed > 0;
+
     // if (encoderRaw >= ShooterConstants.kMaximumEncoderValue && encoderIncreasing) {
     //   shooterRotationMotor.set(0);
     //   atMaximumBound = true;
