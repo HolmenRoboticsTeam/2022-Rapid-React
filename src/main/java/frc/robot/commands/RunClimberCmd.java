@@ -28,13 +28,27 @@ public class RunClimberCmd extends CommandBase {
 
   @Override
   public void execute() {
-    climberSubsystem.setMotor(stick.getRawAxis(3));
-    // climberSubsystem.setMotor(speed);
+    if (climberSubsystem.isLeftClimberAtLimit()) {
+      climberSubsystem.setLeftMotor(ClimberConstants.kHoldSpeed);
+      // if the climber is at limit, it will stop
+    } else {
+      climberSubsystem.setLeftMotor(speed);
+      // it moves
+    }
+
+    if (climberSubsystem.isRightClimberAtLimit()) {
+      climberSubsystem.setRightMotor(ClimberConstants.kHoldSpeed);
+      // if the climber is at limit, it will stop
+    } else {
+      climberSubsystem.setRightMotor(speed);
+      // it moves
+    }
   }
 
   @Override
   public void end(boolean interrupted) {
-    climberSubsystem.setMotor(0);
+    climberSubsystem.setLeftMotor(0);
+    climberSubsystem.setRightMotor(0);
   }
 
   // Returns true when the command should end.

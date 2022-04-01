@@ -43,15 +43,11 @@ public class AngleShooterCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double minimumSpeed = SmartDashboard.getNumber("Shooter Angle Minimum Speed", ShooterConstants.kMinimumRotationSpeed);
-    double maximumSpeed = SmartDashboard.getNumber("Shooter Angle Maximum Speed", ShooterConstants.kMaximumRotationSpeed);
-
-    double shooterAngle = this.shooterAngleSubsystem.getRawEncoderOutput();  // TODO: Calculate angle with encoder output
-    double targetAngle = this.targetAngleSupplier.get();
-    double speed = -pid.calculate(shooterAngle, targetAngle);
-
-    speed = MathUtil.clamp(speed, minimumSpeed, maximumSpeed);
-    shooterAngleSubsystem.setMotor(this.stick.getY());
+  //   if (Math.abs(this.stick.getY()) > 0.5) {
+  //     shooterAngleSubsystem.setMotor(this.stick.getY());
+  //   } else {
+  //     shooterAngleSubsystem.setMotor(0.0);
+  //   }
   }
 
   // Called once the command ends or is interrupted.

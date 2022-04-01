@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
@@ -29,24 +30,23 @@ public class ShooterRotationSubsystem extends SubsystemBase {
   }
 
   public void setMotor(double speed){
-    // Prevent the turret from exceeding its limits
-    double encoderRaw = shooterRotationMotor.getSelectedSensorPosition();
-    boolean encoderIncreasing = speed > 0;
-
-    // if (encoderRaw >= ShooterConstants.kMaximumEncoderValue && encoderIncreasing) {
+    // if (getEncoderValue() >= ShooterConstants.kMaximumEncoderValue){
     //   shooterRotationMotor.set(0);
     //   atMaximumBound = true;
+    //   System.out.println("Shooter at maximum bound");
     //   return;
-    // } else if (encoderRaw <= ShooterConstants.kMinimumEncoderValue && !encoderIncreasing) {
+
+    // } else if (getEncoderValue() <= ShooterConstants.kMinimumEncoderValue) {
     //   shooterRotationMotor.set(0);
     //   atMinimumBound = true;
+    //   System.out.println("Shooter at minimum bound");
     //   return;
     // }
-
-    // Allow motor to run
-    atMinimumBound = false;
-    atMaximumBound = false;
     shooterRotationMotor.set(speed);
+  }
+
+  public double getEncoderValue() {
+    return shooterRotationMotor.getSelectedSensorPosition();
   }
 
   public double getGyroHeading() {
@@ -54,11 +54,11 @@ public class ShooterRotationSubsystem extends SubsystemBase {
   }
 
   public boolean isAtMaximumBound() {
-    return atMaximumBound;
+    return getEncoderValue() >= ShooterConstants.kMaximumEncoderValue;
   }
 
   public boolean isAtMinimumBound() {
-    return atMinimumBound;
+    return getEncoderValue() <= ShooterConstants.kMinimumEncoderValue;
   }
 
   @Override

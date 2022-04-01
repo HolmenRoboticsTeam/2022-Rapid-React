@@ -34,8 +34,13 @@ public final class Constants {
         public static final int kLeftClimberMotorPort = 0;
         public static final int kRightClimberMotorPort = 7;
 
-        public static final double kExtendSpeed = -0.5;
-        public static final double kRetractSpeed = 0.5;
+        public static final int kRightDigitalInput = 0;
+        public static final int kLeftDigitalInput = 1;
+
+        public static final double kExtendSpeed = 1;
+        public static final double kRetractSpeed = -0.8;
+
+        public static final double kHoldSpeed = -0.15;
     }
 
     public static final class ManagementConstants {
@@ -71,8 +76,9 @@ public final class Constants {
         public static final int kShooterFlywheelFrontMotorPort = 0;
         public static final int kShooterFlywheelBackMotorPort = 4;
 
-        public static final double shooterRunSpeed = 0.5;
-        public static final double shooterStopSpeed = 0;
+        public static final double kShooterRunSpeed = -0.55;
+        public static final double kShooterAutoRunSpeed = -0.5;
+        public static final double kShooterStopSpeed = 0;
 
         public static final int kShooterRotationMotorPort = 5;
         public static final int kVerticalShooterMotorPort = 3;
@@ -83,13 +89,15 @@ public final class Constants {
         public static final double rotationConstantAngle = 2.5;
         public static final double kMinimumRotationSpeed = -0.1;
         public static final double kMaximumRotationSpeed = 0.1;
-        public static final double kMinimumEncoderValue = 0;  // TODO: Determine manually
-        public static final double kMaximumEncoderValue = 0;  // TODO: Determine manually
+        public static final double kMinimumEncoderValue = -75000;  // TODO: Determine manually
+        public static final double kMaximumEncoderValue = 75000;  // TODO: Determine manually
 
         public static final double kLimelightMountAngle = 60; // degrees
         public static final double kLimeLightHeightFromGroundMeters = 0.813;
-        public static final double kHeightOfTargetMeters = 2.682;
+        public static final double kHeightOfTargetMeters = 1.854;
         public static final double kPControlConstant = -0.1;
+
+        public static final double kHoldRotationSpeed = 0;
 
         public static final double kGearDiameter = 0.31;
         public static final double kConstantGearRatio = 129.23;

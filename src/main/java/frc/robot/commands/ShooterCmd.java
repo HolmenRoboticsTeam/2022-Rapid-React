@@ -12,11 +12,13 @@ import frc.robot.subsystems.ShooterFlywheelSubsystem;
 public class ShooterCmd extends ParallelCommandGroup {   // button type parallels with the management system
 
   private ShooterFlywheelSubsystem shooterSubsystem;
+  private double speed;
   Joystick stick; // temporary
 
-  public ShooterCmd(ShooterFlywheelSubsystem shooterSubsystem, Joystick stick) {
+  public ShooterCmd(ShooterFlywheelSubsystem shooterSubsystem, double speed, Joystick stick) {
 
     this.shooterSubsystem = shooterSubsystem;
+    this.speed = speed;
     this.stick = stick;
 
     addRequirements(shooterSubsystem);
@@ -28,7 +30,8 @@ public class ShooterCmd extends ParallelCommandGroup {   // button type parallel
   @Override
   public void execute() {
     // System.out.println((this.stick.getRawAxis(3)));  // TODO: Remove
-    shooterSubsystem.setMotor(this.stick.getRawAxis(3)); // Replace with ShooterConstants.kSpeed
+    shooterSubsystem.setMotor(speed); // Replace with ShooterConstants.kSpeed
+    //shooterSubsystem.setMotor(stick.getRawAxis(3));
   }
 
   // Called once the command ends or is interrupted.

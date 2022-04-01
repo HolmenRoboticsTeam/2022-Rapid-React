@@ -13,10 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ManagementConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AngleShooterCmd;
 import frc.robot.commands.AutoDriveToTarget;
 import frc.robot.commands.RunClimberCmd;
@@ -70,11 +72,11 @@ public class RobotContainer {
     shooterRotationSubsystem.setDefaultCommand(
       new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem)
     );
-    
+
     shooterVerticalSubsystem.setDefaultCommand(
       new AngleShooterCmd(shooterVerticalSubsystem, () -> limelightSubsystem.getDoubleTA(), leftHandedJoystick)
     );
-    climberSubsystem.setDefaultCommand(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
+    // climberSubsystem.setDefaultCommand(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
 
     camera1.setResolution(160, 120);
     camera1.setFPS(30);
@@ -102,15 +104,15 @@ public class RobotContainer {
       .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeedAlt));
 
     // Extend climber when button is held
-    // new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonUpIdx)
-    //   .whenHeld(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
+    new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonUpIdx)
+      .whenHeld(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
 
     // // Retract climber when button is held
-    // new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonDownIdx)
-    //   .whenHeld(new RunClimberCmd(climberSubsystem,  ClimberConstants.kRetractSpeed, leftHandedJoystick));
+    new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonDownIdx)
+      .whenHeld(new RunClimberCmd(climberSubsystem,  ClimberConstants.kRetractSpeed, leftHandedJoystick));
 
     new JoystickButton(rightHandedJoystick, OIConstants.kShooterButtonIdx)
-        .whenHeld(new ShooterCmd(shooterSubsystem, rightHandedJoystick));
+        .whenHeld(new ShooterCmd(shooterSubsystem, ShooterConstants.kShooterRunSpeed, rightHandedJoystick));
 
     // Run intake and management simultaneously
     new JoystickButton(rightHandedJoystick, OIConstants.kManagementAndIntakeIdx)
@@ -126,7 +128,17 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
-      new AutoDriveToTarget(this.driveSubsystem, -2.0)
+      new AutoDriveToTarget(this.driveSubsystem, 2.0),
+      new WaitCommand(1),
+      new ParallelCommandGroup(
+        new ShooterCmd(shooterSubsystem, ShooterConstants.kShooterAutoRunSpeed, rightHandedJoystick),
+        new SequentialCommandGroup(
+          new WaitCommand(3),
+          new ParallelCommandGroup (
+            new RunIntakeCmd(intakeSubsystem),
+            new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeed))
+        )
+      )
     );
   }
 }

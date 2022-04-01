@@ -17,7 +17,8 @@ public class RotateShooterCmd extends CommandBase {
   private final ShooterRotationSubsystem shooterRotationSubsystem;
   private final LimeLightSubsystem limeLight;
   private PIDController pid = new PIDController(0.04, 0, 0.0003);
-  private boolean spinLock = false;  // When true, the turret is turning 180 degrees; do not allow other PID input to override it's operation
+  private boolean spinLock = false; // When true, the turret is turning 180 degrees; do not allow other PID input to
+                                    // override it's operation
 
   /** Creates a new RotateShooterCmd. */
   public RotateShooterCmd(ShooterRotationSubsystem shooterRotationSubsystem, LimeLightSubsystem limeLight) {
@@ -43,22 +44,14 @@ public class RotateShooterCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //if (this.limeLight.hasTarget() == (Number)1.0) {
-      double tX = this.limeLight.getDoubleTX();
+    SmartDashboard.putNumber("Distance to Target Meters", this.limeLight.getDistanceToTargetMeters());
 
-      double speed = pid.calculate(tX, 0);
-      speed = MathUtil.clamp(speed, -0.3, 0.3); // create constant for it soon
-      SmartDashboard.putNumber("Shooter Rotation X-Angle Offset", tX);
-      SmartDashboard.putNumber("Shooter Rotation PID Speed", speed);
-      SmartDashboard.putNumber("Distance to Target Meters", this.limeLight.getDistanceToTargetMeters());
+    double tX = this.limeLight.getDoubleTX();
 
-      shooterRotationSubsystem.setMotor(speed); // TODO: replace with speed
-      if (!spinLock) {
-        // Logic to determine if to spin the turret
-        // This should be based on the angle of the gyro
-        // When the angle of gyro (robot's rotation) exceeds 180 degrees, the turret should spin to the opposite bound
-      }
-    //}
+    double speed = pid.calculate(tX, 0); //Current encoder value, minimum or max bound 
+    speed = MathUtil.clamp(speed, -0.35, 0.35);
+    shooterRotationSubsystem.setMotor(speed);
+    System.out.println("Shooter running norminally");
   }
 
   // Called once the command ends or is interrupted.
