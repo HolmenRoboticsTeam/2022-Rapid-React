@@ -76,7 +76,7 @@ public final class Constants {
         public static final int kShooterFlywheelFrontMotorPort = 0;
         public static final int kShooterFlywheelBackMotorPort = 4;
 
-        public static final double kShooterRunSpeed = -0.55;
+        public static final double kShooterRunSpeed = -0.75;
         public static final double kShooterAutoRunSpeed = -0.5;
         public static final double kShooterStopSpeed = 0;
 

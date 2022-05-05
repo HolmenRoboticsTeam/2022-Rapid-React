@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -24,6 +27,7 @@ import frc.robot.commands.AutoDriveToTarget;
 import frc.robot.commands.RunClimberCmd;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.RotateShooterCmd;
+import frc.robot.commands.AltRotateShooter;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.RunManagementCmd;
@@ -68,6 +72,15 @@ public class RobotContainer {
         () -> this.rightHandedJoystick.getX() * 0.80  // Rotate
       )
     );
+
+    // BooleanSupplier sup = () -> limelightSubsystem.hasTarget();
+    // shooterRotationSubsystem.setDefaultCommand(
+    //   new ConditionalCommand(
+    //     new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem),
+    //     new AltRotateShooter(shooterRotationSubsystem, 0.0),
+    //     sup
+    //   )
+    // );
 
     shooterRotationSubsystem.setDefaultCommand(
       new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem)

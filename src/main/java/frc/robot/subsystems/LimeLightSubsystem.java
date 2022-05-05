@@ -45,8 +45,8 @@ public class LimeLightSubsystem extends SubsystemBase {
     return ((ShooterConstants.kHeightOfTargetMeters - ShooterConstants.kLimeLightHeightFromGroundMeters) / (Math.tan(angleToGoalRadians)));
   }
 
-  public Number hasTarget() {
-    return tv.getNumber(0);
+  public boolean hasTarget() {
+    return tv.getNumber(0).doubleValue() == 1.0;
   }
 
   @Override

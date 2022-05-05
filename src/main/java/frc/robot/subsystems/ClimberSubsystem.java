@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -15,7 +16,10 @@ public class ClimberSubsystem extends SubsystemBase{
     private DigitalInput leftLimit = new DigitalInput(ClimberConstants.kLeftDigitalInput);
     private DigitalInput rightLimit = new DigitalInput(ClimberConstants.kRightDigitalInput);
 
-    public ClimberSubsystem() {}
+    public ClimberSubsystem() {
+      leftClimberMotor.setNeutralMode(NeutralMode.Brake);
+      rightClimberMotor.setNeutralMode(NeutralMode.Brake);
+    }
 
     @Override
     public void periodic() {
