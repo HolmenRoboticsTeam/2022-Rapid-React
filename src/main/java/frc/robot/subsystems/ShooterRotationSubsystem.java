@@ -24,8 +24,13 @@ public class ShooterRotationSubsystem extends SubsystemBase {
     shooterRotationMotor.configFactoryDefault();
     shooterRotationMotor.setNeutralMode(NeutralMode.Brake);  // Try to maintain the position when stopped
     shooterRotationMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    shooterRotationMotor.setSensorPhase(true);  // If CW(clockwise) rotation is decreasing encoder, set to false
+    shooterRotationMotor.setSensorPhase(false);  // If CW(clockwise) rotation is decreasing encoder, set to false
     shooterRotationMotor.setSelectedSensorPosition(0);
+    shooterRotationMotor.configForwardSoftLimitThreshold(133000);
+    shooterRotationMotor.configReverseSoftLimitThreshold(-133000); // make it a constant later
+    shooterRotationMotor.configForwardSoftLimitEnable(true);
+    shooterRotationMotor.configReverseSoftLimitEnable(true);
+
     gyro.reset();
   }
 
@@ -65,5 +70,6 @@ public class ShooterRotationSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Shooter Rotation Raw", shooterRotationMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("Shooter Rotation Speed", shooterRotationMotor.get());
+
   }
 }
