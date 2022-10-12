@@ -32,5 +32,6 @@ public class ShooterAngleSubsystem extends SubsystemBase {
   public void periodic() {
     // System.out.println(shooterAngleMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("Shooter Angle Encoder Raw", getRawEncoderOutput());
+    
   }
 }
