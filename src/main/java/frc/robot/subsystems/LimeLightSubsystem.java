@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -57,17 +59,14 @@ public class LimeLightSubsystem extends SubsystemBase {
 
   public double exitVelocityNeededInMeters() {
     return Math.sqrt(
-      (-9.8 * (Math.pow(ShooterConstants.kHeightOfLimelightFromTarget, 2))) * (1 + Math.pow(Math.tan(shootingAngleNeededInMeters()), 2))
+      -((9.8 * (Math.pow(ShooterConstants.kHeightOfLimelightFromTarget, 2))) * (1 + Math.pow(Math.tan(shootingAngleNeededInMeters()), 2))
     /
-    (2 * ShooterConstants.kHeightOfLimelightFromTarget) - (2 * getDistanceToTargetMeters() * Math.tan(shootingAngleNeededInMeters())));
+    (2 * ShooterConstants.kHeightOfLimelightFromTarget) - (2 * getDistanceToTargetMeters() * Math.tan(shootingAngleNeededInMeters()))));
   }
 
   public boolean hasTarget() {
     return tv.getNumber(0).doubleValue() == 1.0;
   }
-  // 360 / (numberOfEncoderPulsesPerRotation) = degrees per pulse
-  // Falcon500 aka SX pulse = 2048 units per rotation
-  // Talon SRX pulse =
 
   @Override
   public void periodic() {

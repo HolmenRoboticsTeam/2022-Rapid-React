@@ -49,7 +49,7 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ManagementSubsystem managementSubsystem = new ManagementSubsystem();
   private final ShooterFlywheelSubsystem shooterSubsystem = new ShooterFlywheelSubsystem();
-  private final ShooterAngleSubsystem shooterVerticalSubsystem = new ShooterAngleSubsystem();
+  private final ShooterAngleSubsystem shooterAngleSubsystem = new ShooterAngleSubsystem();
   private final ShooterRotationSubsystem shooterRotationSubsystem = new ShooterRotationSubsystem();
   private final LimeLightSubsystem limelightSubsystem = new LimeLightSubsystem();
 
@@ -86,8 +86,8 @@ public class RobotContainer {
       new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem)
     );
 
-    shooterVerticalSubsystem.setDefaultCommand(
-      new AngleShooterCmd(shooterVerticalSubsystem, () -> limelightSubsystem.getDoubleTA(), leftHandedJoystick)
+    shooterAngleSubsystem.setDefaultCommand(
+      new AngleShooterCmd(shooterAngleSubsystem, () -> limelightSubsystem.getDoubleTA(), leftHandedJoystick)
     );
     // climberSubsystem.setDefaultCommand(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
 

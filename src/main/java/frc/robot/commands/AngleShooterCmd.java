@@ -43,11 +43,14 @@ public class AngleShooterCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  //   if (Math.abs(this.stick.getY()) > 0.5) {
-  //     shooterAngleSubsystem.setMotor(this.stick.getY());
-  //   } else {
-  //     shooterAngleSubsystem.setMotor(0.0);
-  //   }
+    //SmartDashboard.putNumber("Angle", shooterAngleSubsystem.anglePerRotation());
+    System.out.print("ANGLE: ");
+    System.out.println(shooterAngleSubsystem.anglePerRotation());
+    if (Math.abs(this.stick.getY()) > 0.5) {
+      shooterAngleSubsystem.setMotor(this.stick.getY());
+    } else {
+      shooterAngleSubsystem.setMotor(0.0);
+    }
   }
 
   // Called once the command ends or is interrupted.

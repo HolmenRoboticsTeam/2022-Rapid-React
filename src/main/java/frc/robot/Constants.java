@@ -93,7 +93,7 @@ public final class Constants {
         public static final double kMaximumEncoderValue = 75000;  // TODO: Determine manually
 
         public static final double kLimelightMountAngle = 60; // degrees
-        public static final double kLimeLightHeightFromGroundMeters = 1.6637;  // 0.813
+        public static final double kLimeLightHeightFromGroundMeters = 0.813;  // 0.813
         public static final double kHeightOfTargetMeters = 1.854;
         public static final double kHeightOfLimelightFromTarget = kHeightOfTargetMeters - kLimeLightHeightFromGroundMeters;
         public static final double kPControlConstant = -0.1;
