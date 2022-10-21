@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -92,9 +94,9 @@ public final class Constants {
         public static final double kMinimumEncoderValue = -75000;  // TODO: Determine manually
         public static final double kMaximumEncoderValue = 75000;  // TODO: Determine manually
 
-        public static final double kLimelightMountAngle = 60; // degrees
-        public static final double kLimeLightHeightFromGroundMeters = 0.813;  // 0.813
-        public static final double kHeightOfTargetMeters = 1.854;
+        public static final double kLimelightMountAngle = 25; // degrees 60, 
+        public static final double kLimeLightHeightFromGroundMeters = Units.inchesToMeters(31.25);  // 0.813
+        public static final double kHeightOfTargetMeters = Units.inchesToMeters(105.5);
         public static final double kHeightOfLimelightFromTarget = kHeightOfTargetMeters - kLimeLightHeightFromGroundMeters;
         public static final double kPControlConstant = -0.1;
 
@@ -104,5 +106,7 @@ public final class Constants {
         public static final double kConstantGearRatio = 129.23;
         public static final double kMaxRPM = 0;
         public static final double kUnitsPerRotation = 0;
+
+        public static final double kEntryAngle = -69;
     }
 }

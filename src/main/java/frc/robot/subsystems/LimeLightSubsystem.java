@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -52,16 +53,15 @@ public class LimeLightSubsystem extends SubsystemBase {
   // Constant (angle) = S (rotationConstantAngle)
   // getDistanceToTargetMeters
   public double shootingAngleNeededInMeters() {
+    double targetDistance = getDistanceToTargetMeters();
+    System.out.println(Math.tan(Units.degreesToRadians(ShooterConstants.kEntryAngle)) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget) / -targetDistance);
     return Math.atan(
-      (Math.tan(-69) * getDistanceToTargetMeters() - (2 * ShooterConstants.kHeightOfLimelightFromTarget))
-      / -getDistanceToTargetMeters());
+      Math.tan(Units.degreesToRadians(ShooterConstants.kEntryAngle)) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget) / -targetDistance
+    );
   }
 
   public double exitVelocityNeededInMeters() {
-    return Math.sqrt(
-      -((9.8 * (Math.pow(ShooterConstants.kHeightOfLimelightFromTarget, 2))) * (1 + Math.pow(Math.tan(shootingAngleNeededInMeters()), 2))
-    /
-    (2 * ShooterConstants.kHeightOfLimelightFromTarget) - (2 * getDistanceToTargetMeters() * Math.tan(shootingAngleNeededInMeters()))));
+    return 0;
   }
 
   public boolean hasTarget() {
