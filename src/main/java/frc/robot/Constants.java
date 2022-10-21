@@ -107,6 +107,6 @@ public final class Constants {
         public static final double kMaxRPM = 0;
         public static final double kUnitsPerRotation = 0;
 
-        public static final double kEntryAngle = -69;
+        public static final double kEntryAngle = Units.degreesToRadians(-69);  // Radians
     }
 }

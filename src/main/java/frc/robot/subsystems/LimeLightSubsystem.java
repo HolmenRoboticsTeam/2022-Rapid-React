@@ -48,20 +48,24 @@ public class LimeLightSubsystem extends SubsystemBase {
     return ((ShooterConstants.kHeightOfTargetMeters - ShooterConstants.kLimeLightHeightFromGroundMeters) / (Math.tan(angleToGoalRadians)));
   }
 
-  // Height diference bettwen shooter and target = H
-  // distance between shooter and target of upper hub = d
-  // Constant (angle) = S (rotationConstantAngle)
-  // getDistanceToTargetMeters
   public double shootingAngleNeededInMeters() {
     double targetDistance = getDistanceToTargetMeters();
-    System.out.println(Math.tan(Units.degreesToRadians(ShooterConstants.kEntryAngle)) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget) / -targetDistance);
+    System.out.println(
+      Math.atan(
+        (Math.tan(ShooterConstants.kEntryAngle) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget)) / -targetDistance
+      )
+    );
     return Math.atan(
-      Math.tan(Units.degreesToRadians(ShooterConstants.kEntryAngle)) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget) / -targetDistance
+      (Math.tan(ShooterConstants.kEntryAngle) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget)) / -targetDistance
     );
   }
 
   public double exitVelocityNeededInMeters() {
-    return 0;
+    double targetDistance = getDistanceToTargetMeters();
+    double entryAngle = shootingAngleNeededInMeters();
+    return Math.sqrt(
+      -(9.8 * Math.pow(targetDistance, 2) * (1 + Math.pow(Math.tan(entryAngle), 2))) / (2.0 * ShooterConstants.kHeightOfLimelightFromTarget - 2.0 * targetDistance * Math.tan(entryAngle))
+    );
   }
 
   public boolean hasTarget() {
