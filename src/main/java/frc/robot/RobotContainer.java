@@ -125,7 +125,7 @@ public class RobotContainer {
       .whenHeld(new RunClimberCmd(climberSubsystem,  ClimberConstants.kRetractSpeed, leftHandedJoystick));
 
     new JoystickButton(rightHandedJoystick, OIConstants.kShooterButtonIdx)
-        .whenHeld(new ShooterCmd(shooterSubsystem, ShooterConstants.kShooterRunSpeed, rightHandedJoystick));
+        .whenHeld(new ShooterCmd(shooterSubsystem, limelightSubsystem, shooterAngleSubsystem, shooterSubsystem, ShooterConstants.kShooterRunSpeed, rightHandedJoystick));
 
     // Run intake and management simultaneously
     new JoystickButton(rightHandedJoystick, OIConstants.kManagementAndIntakeIdx)
@@ -144,7 +144,7 @@ public class RobotContainer {
       new AutoDriveToTarget(this.driveSubsystem, 2.0),
       new WaitCommand(1),
       new ParallelCommandGroup(
-        new ShooterCmd(shooterSubsystem, ShooterConstants.kShooterAutoRunSpeed, rightHandedJoystick),
+        new ShooterCmd(shooterSubsystem, limelightSubsystem, shooterAngleSubsystem, shooterSubsystem, ShooterConstants.kShooterRunSpeed, rightHandedJoystick),
         new SequentialCommandGroup(
           new WaitCommand(3),
           new ParallelCommandGroup (

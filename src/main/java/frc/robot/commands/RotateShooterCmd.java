@@ -51,7 +51,7 @@ public class RotateShooterCmd extends CommandBase {
     double speed = pid.calculate(tX, 0); //Current encoder value, minimum or max bound 
     speed = MathUtil.clamp(speed, -0.35, 0.35); // 0.35 CHANGE before
     // shooterRotationSubsystem.setMotor(speed);
-    System.out.println("Shooter running norminally");
+    // System.out.println("Shooter running norminally");
   }
 
   // Called once the command ends or is interrupted.

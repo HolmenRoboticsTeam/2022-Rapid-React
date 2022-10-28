@@ -7,11 +7,13 @@ package frc.robot.subsystems; // In progress
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterAngleSubsystem extends SubsystemBase {
+  //private PIDController shooterAnglePID = new PIDController(ShooterConstants.kShooterAngleKP, ShooterConstants.kShooterAngleKI, ShooterConstants.kShooterAngleKD);
   private WPI_TalonSRX shooterAngleMotor = new WPI_TalonSRX(ShooterConstants.kVerticalShooterMotorPort);
 
   public ShooterAngleSubsystem() {
@@ -27,11 +29,19 @@ public class ShooterAngleSubsystem extends SubsystemBase {
     // Falcon500 aka SX pulse = 2048 units per rotation
     // Talon SRX pulse = 4096
   }
-  public double anglePerRotation() {
+  public double getCurrentAngle() {
     return getRawEncoderOutput() * degreesPerPulseDriveGear();
   }
   public void setMotor(double speed){
     shooterAngleMotor.set(speed);
+  }
+  public void setAngle(double angle){
+    // get current angle (create a variable)
+    // calculate (for PID object) 2 arguments -- current, target
+    // call set motor using calculate output
+    // double currentAngle = getCurrentAngle();
+    // double output = shooterAnglePID.calculate(currentAngle, angle);
+    // setMotor(output);
   }
 
   public double getRawEncoderOutput() {
@@ -42,7 +52,7 @@ public class ShooterAngleSubsystem extends SubsystemBase {
   public void periodic() {
     // System.out.println(shooterAngleMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("Shooter Angle Encoder Raw", getRawEncoderOutput());
-    SmartDashboard.putNumber("Angle", anglePerRotation());
+    SmartDashboard.putNumber("Angle", getCurrentAngle());
     
   }
 }

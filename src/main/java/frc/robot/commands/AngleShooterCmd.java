@@ -44,8 +44,8 @@ public class AngleShooterCmd extends CommandBase {
   @Override
   public void execute() {
     //SmartDashboard.putNumber("Angle", shooterAngleSubsystem.anglePerRotation());
-    System.out.print("ANGLE: ");
-    System.out.println(shooterAngleSubsystem.anglePerRotation());
+    // System.out.print("ANGLE: ");
+    // System.out.println(shooterAngleSubsystem.getCurrentAngle());
     if (Math.abs(this.stick.getY()) > 0.5) {
       shooterAngleSubsystem.setMotor(this.stick.getY());
     } else {

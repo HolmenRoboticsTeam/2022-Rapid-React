@@ -75,8 +75,8 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
-        public static final int kShooterFlywheelFrontMotorPort = 0;
-        public static final int kShooterFlywheelBackMotorPort = 4;
+        public static final int kShooterFlywheelFrontMotorPort = 10;
+        public static final int kShooterFlywheelBackMotorPort = 11;
 
         public static final double kShooterRunSpeed = -0.75;
         public static final double kShooterAutoRunSpeed = -0.5;
@@ -108,5 +108,14 @@ public final class Constants {
         public static final double kUnitsPerRotation = 0;
 
         public static final double kEntryAngle = Units.degreesToRadians(-69);  // Radians
+
+        // public static final double kShooterAngleKP = 0;
+        // public static final double kShooterAngleKI = 0;
+        // public static final double kShooterAngleKD = 0;
+
+        // public static final double kShooterFlywheelKP = 0.05;
+        // public static final double kShooterFlywheelKI = 0;
+        // public static final double kShooterFlywheelKD = 0.00007;
+
     }
 }

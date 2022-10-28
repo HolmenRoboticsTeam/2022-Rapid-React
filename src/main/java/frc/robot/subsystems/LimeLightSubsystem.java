@@ -50,11 +50,11 @@ public class LimeLightSubsystem extends SubsystemBase {
 
   public double shootingAngleNeededInMeters() {
     double targetDistance = getDistanceToTargetMeters();
-    System.out.println(
-      Math.atan(
-        (Math.tan(ShooterConstants.kEntryAngle) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget)) / -targetDistance
-      )
-    );
+    // System.out.println(
+    //   Math.atan(
+    //     (Math.tan(ShooterConstants.kEntryAngle) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget)) / -targetDistance
+    //   )
+    // );
     return Math.atan(
       (Math.tan(ShooterConstants.kEntryAngle) * targetDistance - (2.0 * ShooterConstants.kHeightOfLimelightFromTarget)) / -targetDistance
     );
@@ -63,7 +63,7 @@ public class LimeLightSubsystem extends SubsystemBase {
   public double exitVelocityNeededInMeters() {
     double targetDistance = getDistanceToTargetMeters();
     double entryAngle = shootingAngleNeededInMeters();
-    return Math.sqrt(
+    return 1.5 * Math.sqrt(
       -(9.8 * Math.pow(targetDistance, 2) * (1 + Math.pow(Math.tan(entryAngle), 2))) / (2.0 * ShooterConstants.kHeightOfLimelightFromTarget - 2.0 * targetDistance * Math.tan(entryAngle))
     );
   }
@@ -75,6 +75,6 @@ public class LimeLightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("SHOOTER: VELOCITY NEEDED", exitVelocityNeededInMeters());
-    SmartDashboard.putNumber("SHOOTER: SHOOTING ANGLE NEEDED", shootingAngleNeededInMeters());
+    SmartDashboard.putNumber("SHOOTER: SHOOTING ANGLE NEEDED", Math.toDegrees(shootingAngleNeededInMeters()));
   } //
 }
