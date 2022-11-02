@@ -4,133 +4,183 @@
 
 package frc.robot;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.ManagementConstants;
-import frc.robot.Constants.OIConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.AngleShooterCmd;
-import frc.robot.commands.AutoDriveToTarget;
-import frc.robot.commands.RunClimberCmd;
-import frc.robot.commands.DriveCmd;
-import frc.robot.commands.RotateShooterCmd;
-import frc.robot.commands.AltRotateShooter;
-import frc.robot.commands.ShooterCmd;
-import frc.robot.commands.RunIntakeCmd;
-import frc.robot.commands.RunManagementCmd;
+import frc.robot.Constants.InputConstants;
+import frc.robot.commands.AngleShooterCommand;
+import frc.robot.commands.AutogenousFiringCommand;
+import frc.robot.commands.ExtendClimbersCommand;
+import frc.robot.commands.JoystickDriveCommand;
+import frc.robot.commands.RetractClimbersCommand;
+import frc.robot.commands.RotateShooterCommand;
+import frc.robot.commands.RunIntakeForwardCommand;
+import frc.robot.commands.RunIntakeManagementForwardParallelCommand;
+import frc.robot.commands.RunManagementForwardCommand;
+import frc.robot.commands.RunManagementReverseCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ManagementSubsystem;
-import frc.robot.subsystems.ShooterRotationSubsystem;
-import frc.robot.subsystems.ShooterFlywheelSubsystem;
 import frc.robot.subsystems.ShooterAngleSubsystem;
+import frc.robot.subsystems.ShooterFlywheelSubsystem;
+import frc.robot.subsystems.ShooterTurretSubsystem;
 
+/**
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * subsystems, commands, and button mappings) should be declared here.
+ */
 public class RobotContainer {
+  // The robot's subsystems and commands are defined here...
+  private ClimberSubsystem climberSubsystem;
+  private DriveSubsystem driveSubsystem;
+  private IntakeSubsystem intakeSubsystem;
+  private LimelightSubsystem limelightSubsystem;
+  private ManagementSubsystem managementSubsystem;
+  private ShooterAngleSubsystem shooterAngleSubsystem;
+  private ShooterFlywheelSubsystem shooterFlywheelSubsystem;
+  private ShooterTurretSubsystem shooterTurretSubsystem;
 
-  private final UsbCamera camera1 = CameraServer.startAutomaticCapture();
+  private ExtendClimbersCommand extendClimbersCommand;
+  private RetractClimbersCommand retractClimbersCommand;
+  private JoystickDriveCommand joystickDriveCommand;
+  private RunIntakeForwardCommand runIntakeForwardCommand;
+  private RunManagementForwardCommand runManagementForwardCommand;
+  private RunManagementReverseCommand runManagementReverseCommand;
+  private AngleShooterCommand angleShooterCommand;
+  private RotateShooterCommand rotateShooterCommand;
 
-  private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final ManagementSubsystem managementSubsystem = new ManagementSubsystem();
-  private final ShooterFlywheelSubsystem shooterSubsystem = new ShooterFlywheelSubsystem();
-  private final ShooterAngleSubsystem shooterAngleSubsystem = new ShooterAngleSubsystem();
-  private final ShooterRotationSubsystem shooterRotationSubsystem = new ShooterRotationSubsystem();
-  private final LimeLightSubsystem limelightSubsystem = new LimeLightSubsystem();
+  private RunIntakeManagementForwardParallelCommand runIntakeManagementForwardParallelCommand;
 
-  private final Joystick leftHandedJoystick = new Joystick(OIConstants.kLeftHandedJoystickPort);
-  private final Joystick rightHandedJoystick = new Joystick(OIConstants.kRightHandedJoystickPort);
+  private AutogenousFiringCommand autogenousFiringCommand;
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  // The input joysticks and buttons are defined here...
+  private Joystick leftJoystick;
+  private Joystick rightJoystick;
+
+  private JoystickButton climberExtendButton;
+  private JoystickButton climberRetractButton;
+
+  private JoystickButton runIntakeForwardButton;
+
+  private JoystickButton runManagementForwardButton;
+  private JoystickButton runManagementReverseButton;
+
+  private JoystickButton runIntakeManagementForwardButton;
+
+  private JoystickButton autogenousFiringButton;
+
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // Create the subsystems and commands
+    this.createSubsystemsCommands();
+
+    // Create the joysticks and buttons
+    this.createJoysticksButtons();
 
     // Configure the button bindings
-    configureButtonBindings();
+    this.configureButtonBindings();
 
-    driveSubsystem.setDefaultCommand(
-      new DriveCmd(
-        driveSubsystem,
-        () -> this.rightHandedJoystick.getY(),  // Forward-Back
-        () -> this.leftHandedJoystick.getX() * 0.0,  // Straffe Left-Right (not needed anymore)
-        () -> this.rightHandedJoystick.getX() * 0.80  // Rotate
-      )
-    );
+    // Set default commands for subsystems
+    this.setDefaultCommands();
 
-    // BooleanSupplier sup = () -> limelightSubsystem.hasTarget();
-    // shooterRotationSubsystem.setDefaultCommand(
-    //   new ConditionalCommand(
-    //     new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem),
-    //     new AltRotateShooter(shooterRotationSubsystem, 0.0),
-    //     sup
-    //   )
-    // );
-
-    shooterRotationSubsystem.setDefaultCommand(
-      new RotateShooterCmd(shooterRotationSubsystem, limelightSubsystem)
-    );
-
-    shooterAngleSubsystem.setDefaultCommand(
-      new AngleShooterCmd(shooterAngleSubsystem, () -> limelightSubsystem.getDoubleTA(), leftHandedJoystick)
-    );
-    // climberSubsystem.setDefaultCommand(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
-
-    camera1.setResolution(160, 120);
-    camera1.setFPS(30);
+    // Start the camera
+    CameraServer.startAutomaticCapture();
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by
+   * Create robot subsystems and commands in this method.
+   */
+  private void createSubsystemsCommands() {
+    this.climberSubsystem = new ClimberSubsystem();
+    this.driveSubsystem = new DriveSubsystem();
+    this.intakeSubsystem = new IntakeSubsystem();
+    this.limelightSubsystem = new LimelightSubsystem();
+    this.managementSubsystem = new ManagementSubsystem();
+    this.shooterAngleSubsystem = new ShooterAngleSubsystem();
+    this.shooterFlywheelSubsystem = new ShooterFlywheelSubsystem();
+    this.shooterTurretSubsystem = new ShooterTurretSubsystem();
+
+    this.extendClimbersCommand = new ExtendClimbersCommand(this.climberSubsystem);
+    this.retractClimbersCommand = new RetractClimbersCommand(this.climberSubsystem);
+    this.joystickDriveCommand = new JoystickDriveCommand(this.driveSubsystem, this.leftJoystick);
+    this.runIntakeForwardCommand = new RunIntakeForwardCommand(this.intakeSubsystem);
+    this.runManagementForwardCommand = new RunManagementForwardCommand(this.managementSubsystem);
+    this.runManagementReverseCommand = new RunManagementReverseCommand(this.managementSubsystem);
+    this.angleShooterCommand = new AngleShooterCommand(this.shooterAngleSubsystem, this.limelightSubsystem);
+    this.rotateShooterCommand = new RotateShooterCommand(this.shooterTurretSubsystem, this.limelightSubsystem);
+    this.runIntakeManagementForwardParallelCommand = new RunIntakeManagementForwardParallelCommand(
+      this.runIntakeForwardCommand,
+      this.runManagementForwardCommand
+    );
+    this.autogenousFiringCommand = new AutogenousFiringCommand(
+      this.shooterAngleSubsystem,
+      this.shooterFlywheelSubsystem,
+      this.shooterTurretSubsystem,
+      this.limelightSubsystem,
+      this.managementSubsystem
+    );
+  }
+
+  /**
+   * Create joysticks and joystick buttons in this method.
+   */
+  private void createJoysticksButtons() {
+    // Joysticks
+    this.leftJoystick = new Joystick(InputConstants.kLeftJoystickPort);
+    this.rightJoystick = new Joystick(InputConstants.kRightJoystickPort);
+
+    // Joystick buttons
+    this.climberExtendButton = new JoystickButton(this.leftJoystick, InputConstants.kClimberExtendLeftJButton);
+    this.climberRetractButton = new JoystickButton(this.leftJoystick, InputConstants.kClimberRetractLeftJButton);
+    this.runIntakeForwardButton = new JoystickButton(this.rightJoystick, InputConstants.kIntakeForwardRightJButton);
+    this.runManagementForwardButton = new JoystickButton(this.rightJoystick, InputConstants.kManagementForwardRightJButton);
+    this.runManagementReverseButton = new JoystickButton(this.rightJoystick, InputConstants.kManagementReverseRightJButton);
+    this.runIntakeManagementForwardButton = new JoystickButton(this.rightJoystick, InputConstants.kIntakeAndManagementForwardRightJButton);
+    this.autogenousFiringButton = new JoystickButton(this.rightJoystick, InputConstants.kAutogenousFiringRightJButton);
+  }
+
+  /**
+   * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Run intake when button is held
-    new JoystickButton(rightHandedJoystick, OIConstants.kIntakeButtonIdx)
-      .whenHeld(new RunIntakeCmd(intakeSubsystem));
+    // Climber
+    this.climberExtendButton.whenHeld(this.extendClimbersCommand);
+    this.climberRetractButton.whenHeld(this.retractClimbersCommand);
 
-    // Run management forward when button is held
-    new JoystickButton(rightHandedJoystick, OIConstants.kManagementButtonIdx)
-      .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeed));
+    // Intake
+    this.runIntakeForwardButton.whenHeld(this.runIntakeForwardCommand);
 
-    // Run management backwards when button is held
-    new JoystickButton(rightHandedJoystick, OIConstants.kManagementButton2)
-      .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeedAlt));
+    // Management
+    this.runManagementForwardButton.whenHeld(this.runManagementForwardCommand);
+    this.runManagementReverseButton.whenHeld(this.runManagementReverseCommand);
 
-    // Extend climber when button is held
-    new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonUpIdx)
-      .whenHeld(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
+    // Management and Intake
+    this.runIntakeManagementForwardButton.whenHeld(this.runIntakeManagementForwardParallelCommand);
 
-    // // Retract climber when button is held
-    new JoystickButton(leftHandedJoystick, OIConstants.kClimberButtonDownIdx)
-      .whenHeld(new RunClimberCmd(climberSubsystem,  ClimberConstants.kRetractSpeed, leftHandedJoystick));
+    // Shooter
+    this.autogenousFiringButton.whenHeld(this.autogenousFiringCommand);
+  }
 
-    new JoystickButton(rightHandedJoystick, OIConstants.kShooterButtonIdx)
-        .whenHeld(new ShooterCmd(shooterSubsystem, limelightSubsystem, shooterAngleSubsystem, shooterSubsystem, ShooterConstants.kShooterRunSpeed, rightHandedJoystick));
+  /**
+   * Set default commands for subsystems in this method.
+   */
+  private void setDefaultCommands() {
+    // Drivebase
+    this.driveSubsystem.setDefaultCommand(this.joystickDriveCommand);
 
-    // Run intake and management simultaneously
-    new JoystickButton(rightHandedJoystick, OIConstants.kManagementAndIntakeIdx)
-        .whenHeld(new RunIntakeCmd(intakeSubsystem))
-        .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeed));
+    // Shooter
+    this.shooterAngleSubsystem.setDefaultCommand(this.angleShooterCommand);
+    this.shooterTurretSubsystem.setDefaultCommand(this.rotateShooterCommand);
   }
 
   /**
@@ -140,23 +190,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new SequentialCommandGroup(
-      new AutoDriveToTarget(this.driveSubsystem, 2.0),
-      new WaitCommand(1),
-      new ParallelCommandGroup(
-        new ShooterCmd(shooterSubsystem, limelightSubsystem, shooterAngleSubsystem, shooterSubsystem, ShooterConstants.kShooterRunSpeed, rightHandedJoystick),
-        new SequentialCommandGroup(
-          new WaitCommand(3),
-          new ParallelCommandGroup (
-            new RunIntakeCmd(intakeSubsystem),
-            new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeed))
-        )
-      )
-    );
+    return null;
   }
 }
-/*
- * elevatorSubsystem.setDefaultCommand(new
- * ElevatorJoystickCmd(elevatorSubsystem, 0));
- * intakeSubsystem.setDefaultCommand(new IntakeSetCmd(intakeSubsystem, true));
- */

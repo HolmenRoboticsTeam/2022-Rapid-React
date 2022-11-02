@@ -1,4 +1,12 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot;
+
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.util.Units;
 
@@ -12,110 +20,191 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
 
-    public static final class DriveConstants {
-        public static final int kLeftFrontMotor = 1; // Talons (gets feedback)              Talon 1
-        public static final int kRightFrontMotor = 2; // The unmarked motor                 Talon 2
-        public static final int kBackLeftMotor = 6; // for the tank                         Victor 6
-        //public static final int kMiddleLeftMotor = 1; // for the H-drive                     Victor 1
-        public static final int kBackRightMotor = 3; // for the tank                        Victor 3
-        //public static final int kMiddleRightMotor = 2; // for the H-drive                   Victor 2
-        public static final double kEncoderTick2Meter = 4096.0 * 1.0 * 0.2032 * Math.PI;
+    public static class InputConstants {
+        // Controllers
+        public static final int kLeftJoystickPort = 0;
+        public static final int kRightJoystickPort = 1;
 
-        // autonomus
-        public static final double kAutoDriveForwardSpeed = 0.5;
-        public static final double kAutoDriveForwardDistance = 1.5;
+        // Climber buttons
+        public static final int kClimberExtendLeftJButton = 5;
+        public static final int kClimberRetractLeftJButton = 3;
+
+        // Intake buttons
+        public static final int kIntakeForwardRightJButton = 5;
+
+        // Management buttons
+        public static final int kManagementForwardRightJButton = 4;
+        public static final int kManagementReverseRightJButton = 6;
+        public static final int kIntakeAndManagementForwardRightJButton = 3;
+
+        // Shooter buttons
+        public static final int kAutogenousFiringRightJButton = 1;
     }
 
-    public static final class IntakeConstants {
-        public static final int kLeftMotorPort = 5; //                  Victor 5
+    public static class ClimberConstants {
+        // Motors
+        public static final int kLeftMotorPort = 0;
+        public static final int kRightMotorPort = 7;
 
-        public static final double kSpeed = 0.75;
-    }
+        public static final NeutralMode kLeftNeutralMode = NeutralMode.Brake;
+        public static final NeutralMode kRightNeutralMode = NeutralMode.Brake;
 
-    public static final class ClimberConstants {
-        public static final int kLeftClimberMotorPort = 0;
-        public static final int kRightClimberMotorPort = 7;
+        // Limits
+        public static final int kLeftLimitPort = 0;
+        public static final int kRightLimitPort = 1;
 
-        public static final int kRightDigitalInput = 0;
-        public static final int kLeftDigitalInput = 1;
-
+        // Speeds
         public static final double kExtendSpeed = 1;
-        public static final double kRetractSpeed = -0.8;
-
+        public static final double kRetractSpeed = -1;
         public static final double kHoldSpeed = -0.15;
     }
 
-    public static final class ManagementConstants {
-        public static final int kManagementMotorPort = 4; //            Victor 4
+    public static class DriveConstants {
+        // Motors
+        public static final int kLeftFrontMotorPort = 1;
+        public static final int kRightFrontMotorPort = 2;
+        public static final int kLeftBackMotorPort = 6;
+        public static final int kRightBackMotorPort = 3;
 
-        public static final double kSpeed = 1;
-        public static final double kSpeedAlt = -0.25;
+        public static final InvertType kLeftFrontInverted = InvertType.None;
+        public static final InvertType kRightFrontInverted = InvertType.InvertMotorOutput;
+        public static final InvertType kLeftBackInverted = InvertType.FollowMaster;
+        public static final InvertType kRightBackInverted = InvertType.FollowMaster;
+
+        public static final NeutralMode kLeftFrontNeutralMode = NeutralMode.Brake;
+        public static final NeutralMode kRightFrontNeutralMode = NeutralMode.Brake;
+        public static final NeutralMode kLeftBackNeutralMode = NeutralMode.Brake;
+        public static final NeutralMode kRightBackNeutralMode = NeutralMode.Brake;
+
+        public static final FeedbackDevice kLeftFrontFeedbackDevice = FeedbackDevice.CTRE_MagEncoder_Relative;
+        public static final FeedbackDevice kRightFrontFeedbackDevice = FeedbackDevice.CTRE_MagEncoder_Relative;
+
+        public static final boolean kLeftFrontSensorPhase = true;
+        public static final boolean kRightFrontSensorPhase = true;
+
+        // Encoders
+        public static final int kTicksPerRev = 4096;
+        public static final double kGearRatio = 1;
+        public static final double kWheelRadiusMeters = Units.inchesToMeters(3.0);
+        public static final double kWheelCircumferenceMeters = 2.0 * kWheelRadiusMeters * Math.PI;
     }
 
-    public static final class OIConstants {
-        public static final int kLeftHandedJoystickPort = 0; //left joystick
+    public static class IntakeConstants {
+        // Motors
+        public static final int kIntakeMotorPort = 5;
 
-        public static final int kRightHandedJoystickPort = 1; //right joystick
-
-        public static final int kArcadeDriveSpeedAxis = 1;
-        public static final int kArcadeDriveTurnAxis = 3;
-
-        public static final int kIntakeButtonIdx = 5; // left middle button: RIGHT JOYSTICK
-
-        public static final int kManagementButtonIdx = 4; // Goes Fast
-        public static final int kManagementButton2 = 6; // Goes backwards
-        public static final int kManagementAndIntakeIdx = 3; // Has both intake and management run at the same time
-
-        public static final int kShooterButtonIdx = 1; // right trigger: RIGHT JOYSTICK (parallels with the management)
-
-        public static final int kClimberButtonUpIdx = 5; // right middle button: LEFT JOYSTICK
-        public static final int kClimberButtonDownIdx = 3; // right bottom button: LEFT JOYSTICK
-
-        public static final int kRotationButtonIdx = 11; // for vertical shooter
+        // Speed
+        public static final double kForwardSpeed = 0.75;
     }
 
-    public static final class ShooterConstants {
-        public static final int kShooterFlywheelFrontMotorPort = 10;
-        public static final int kShooterFlywheelBackMotorPort = 11;
+    public static class LimelightConstants {
+        // Network tables
+        public static final String kNetworkTable = "limelight";
+        public static final String kXOffsetEntry = "tx";
+        public static final String kYOffsetEntry = "ty";
+        public static final String kTargetAreaEntry = "ta";
+        public static final String kTargetFoundEntry = "tv";
 
-        public static final double kShooterRunSpeed = -0.75;
-        public static final double kShooterAutoRunSpeed = -0.5;
-        public static final double kShooterStopSpeed = 0;
+        // Limelight mounting
+        public static final double kLimelightMountAngle = 25.0;  // From 90 degrees vertical
+        public static final double kLimelightMountHeightMeters = Units.inchesToMeters(31.25);
 
-        public static final int kShooterRotationMotorPort = 5;
-        public static final int kVerticalShooterMotorPort = 3;
-
-        public static final double shooterRotationRunSpeed = 0.05;
-        public static final double verticalMotorRunSpeed = 2;
-
-        public static final double rotationConstantAngle = 2.5;
-        public static final double kMinimumRotationSpeed = -0.1;
-        public static final double kMaximumRotationSpeed = 0.1;
-        public static final double kMinimumEncoderValue = -75000;  // TODO: Determine manually
-        public static final double kMaximumEncoderValue = 75000;  // TODO: Determine manually
-
-        public static final double kLimelightMountAngle = 25; // degrees 60, 
-        public static final double kLimeLightHeightFromGroundMeters = Units.inchesToMeters(31.25);  // 0.813
+        // Target
         public static final double kHeightOfTargetMeters = Units.inchesToMeters(105.5);
-        public static final double kHeightOfLimelightFromTarget = kHeightOfTargetMeters - kLimeLightHeightFromGroundMeters;
-        public static final double kPControlConstant = -0.1;
-
-        public static final double kHoldRotationSpeed = 0;
-
-        public static final double kGearDiameter = 0.31;
-        public static final double kConstantGearRatio = 129.23;
-        public static final double kMaxRPM = 0;
-        public static final double kUnitsPerRotation = 0;
-
-        public static final double kEntryAngle = Units.degreesToRadians(-69);  // Radians
-
-        // public static final double kShooterAngleKP = 0;
-        // public static final double kShooterAngleKI = 0;
-        // public static final double kShooterAngleKD = 0;
-
-        // public static final double kShooterFlywheelKP = 0.05;
-        // public static final double kShooterFlywheelKI = 0;
-        // public static final double kShooterFlywheelKD = 0.00007;
-
+        public static final double kHeightOfTargetFromLimelightMeters = kHeightOfTargetMeters - kLimelightMountHeightMeters;
     }
+
+    public static class ManagementConstants {
+        // Motors
+        public static final int kManagementMotorPort = 4;
+
+        // Speed
+        public static final double kForwardSpeed = 1.0;
+        public static final double kReverseSpeed = -0.25;
+    }
+
+    public static class ShooterAngleConstants {
+        // Motors
+        public static final int kShooterAngleMotorPort = 3;
+
+        public static final NeutralMode kNeutralMode = NeutralMode.Brake;
+        public static final FeedbackDevice kFeedbackDevice = FeedbackDevice.CTRE_MagEncoder_Relative;
+        public static final boolean kSensorPhase = false;
+
+        // Encoders
+        public static final int kTicksPerRev = 4096;
+        public static final double kDegreesInCircles = 360.0;
+        public static final double kPrimaryGearRatio = 200.0 / 1.0;
+        public static final double kSecondaryGearRatio = 164.0 / 12.0;
+        public static final double kDegreesPerPulse = kDegreesInCircles / (kPrimaryGearRatio * kSecondaryGearRatio * kTicksPerRev);
+
+        // Motion controllers
+        public static final double kP = 0.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kF = 0.0;
+
+        // Goals and tolerances
+        public static final double kGoalTolerance = 0.01;  // Decimal percentage; 1 = 100%
+        public static final double kEntryAngleRadians = Units.degreesToRadians(-69);
+    }
+
+    public static class ShooterFlywheelConstants {
+        // Motors
+        public static final int kFrontMotorPort = 10;
+        public static final int kBackMotorPort = 11;
+
+        // DANGER: Changing the below to brake mode may cause damage
+        public static final NeutralMode kFrontNeutralMode = NeutralMode.Coast;
+        public static final NeutralMode kBackNeutralMode = NeutralMode.Coast;
+
+        public static final FeedbackDevice kFrontFeedbackDevice = FeedbackDevice.IntegratedSensor;
+        public static final FeedbackDevice kBackFeedbackDevice = FeedbackDevice.IntegratedSensor;
+
+        // Motion controllers
+        public static final double kFrontKP = 0.0;
+        public static final double kFrontKI = 0.0;
+        public static final double kFrontKD = 0.0;
+        public static final double kFrontKF = 0.0;
+
+        public static final double kBackKP = 0.0;
+        public static final double kBackKI = 0.0;
+        public static final double kBackKD = 0.0;
+        public static final double kBackKF = 0.0;
+
+        // Encoders
+        public static int kTicksPerRev = 2048;
+        public static int k100msPerSecond = 10;
+        public static double kGearRatio = 4.0 / 1.0;
+        public static double kWheelRadiusMeters = Units.inchesToMeters(3.0);
+        public static double kWheelCircumferenceMeters = 2.0 * Math.PI * kWheelRadiusMeters;
+
+        // Goals and tolerances
+        public static final double kGoalTolerance = 0.01;  // Decimal percentage; 1 = 100%
+    }
+
+    public static class ShooterTurretConstants {
+        // Motors
+        public static final int kShooterTurretMotorPort = 5;
+
+        public static final NeutralMode kNeutralMode = NeutralMode.Brake;
+
+        public static final boolean kForwardSoftLimitEnabled = true;
+        public static final boolean kReverseSoftLimitEnabled = true;
+        public static final double kForwardSoftLimitThreshold = 133000;
+        public static final double kReverseSoftLimitThreshold = -133000;
+
+        public static final FeedbackDevice kFeedbackDevice = FeedbackDevice.CTRE_MagEncoder_Relative;
+        public static final boolean kSensorPhase = false;
+
+        // Motion controllers
+        public static final double kP = 0.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kF = 0.0;
+
+        // Goals and tolerances
+        public static final double kGoalTolerance = 1.0;  // Degrees
+    }
+
 }

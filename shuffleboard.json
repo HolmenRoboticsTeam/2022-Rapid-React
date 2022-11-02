@@ -1,0 +1,312 @@
+{
+  "tabPane": [
+    {
+      "title": "SmartDashboard",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "SmartDashboard/",
+      "widgetPane": {
+        "gridSize": 64.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "6,0": {
+            "size": [
+              6,
+              8
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera 0",
+              "_title": "Front Camera",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
+            }
+          },
+          "0,0": {
+            "size": [
+              6,
+              2
+            ],
+            "content": {
+              "_type": "Basic FMS Info",
+              "_source0": "network_table:///FMSInfo",
+              "_title": "FMSInfo"
+            }
+          },
+          "25,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Target Distance",
+              "_title": "Target Distance"
+            }
+          },
+          "26,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Management Motor Speed",
+              "_title": "Management Motor Speed"
+            }
+          },
+          "27,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Shooter Angle Speed",
+              "_title": "Shooter Angle Speed"
+            }
+          },
+          "25,1": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Shooter Flywheel Back Ready",
+              "_title": "Shooter Flywheel Back Ready",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "12,3": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Shooter Flywheel",
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 2,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "0,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Shooter Flywheel Front Speed mps",
+                  "_title": "Front Speed",
+                  "Range/Min": 0.0,
+                  "Range/Max": 20.0,
+                  "Visuals/Show value": true
+                },
+                "1,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Shooter Flywheel Back Speed mps",
+                  "_title": "Back Speed",
+                  "Range/Min": 0.0,
+                  "Range/Max": 20.0,
+                  "Visuals/Show value": true
+                },
+                "1,1": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Shooter Flywheel Back Ready",
+                  "_title": "Back Flywheel Ready",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                "0,1": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Shooter Flywheel Front Ready",
+                  "_title": "Front Flywheel Ready",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                }
+              }
+            }
+          },
+          "18,3": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Shooter Angle",
+              "Layout/Number of columns": 1,
+              "Layout/Number of rows": 3,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "0,1": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Shooter Angle Speed",
+                  "_title": "Speed",
+                  "Range/Min": 0.0,
+                  "Range/Max": 20.0,
+                  "Visuals/Show value": true
+                },
+                "0,2": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Shooter Angle Ready",
+                  "_title": "At Required Angle",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                "0,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Shooter Angle",
+                  "_title": "Angle",
+                  "Range/Min": 0.0,
+                  "Range/Max": 180.0,
+                  "Visuals/Show value": true
+                }
+              }
+            }
+          },
+          "12,0": {
+            "size": [
+              12,
+              3
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Goals",
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "1,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Required Angle",
+                  "_title": "Required Angle",
+                  "Range/Min": 0.0,
+                  "Range/Max": 180.0,
+                  "Visuals/Show value": true
+                },
+                "0,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Required Velocity",
+                  "_title": "Required Velocity",
+                  "Range/Min": 0.0,
+                  "Range/Max": 20.0,
+                  "Visuals/Show value": true
+                }
+              }
+            }
+          },
+          "12,9": {
+            "size": [
+              6,
+              3
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Shooter Turret",
+              "Layout/Number of columns": 3,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "1,0": {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Shooter Turret Speed",
+                  "_title": "Speed",
+                  "Range/Min": 0.0,
+                  "Range/Max": 100.0,
+                  "Visuals/Show value": true
+                },
+                "2,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Shooter Turret At Forward Limit",
+                  "_title": "At Forward Limit",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                "0,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Shooter Turret At Reverse Limit",
+                  "_title": "At Reverse Limit",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                }
+              }
+            }
+          },
+          "18,9": {
+            "size": [
+              6,
+              3
+            ],
+            "content": {
+              "_type": "Grid Layout",
+              "_title": "Climbers",
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 1,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "0,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Left Climber At Limit",
+                  "_title": "Left Climber At Limit",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                "1,0": {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Right Climber At Limit",
+                  "_title": "Right Climber At Limit",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                }
+              }
+            }
+          },
+          "0,2": {
+            "size": [
+              6,
+              6
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_title": "Limelight",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
+            }
+          },
+          "6,8": {
+            "size": [
+              6,
+              4
+            ],
+            "content": {
+              "_type": "Differential Drivebase",
+              "_source0": "network_table:///LiveWindow/Ungrouped/DifferentialDrive[1]",
+              "_title": "Drivebase",
+              "Wheels/Number of wheels": 4,
+              "Wheels/Wheel diameter": 80.0,
+              "Visuals/Show velocity vectors": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "windowGeometry": {
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1936.0,
+    "height": 1096.0
+  }
+}

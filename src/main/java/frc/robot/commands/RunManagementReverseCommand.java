@@ -5,32 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.Constants.ManagementConstants;
+import frc.robot.subsystems.ManagementSubsystem;
 
-public class RunIntakeCmd extends CommandBase {
+public class RunManagementReverseCommand extends CommandBase {
+  // Subsystems
+  private ManagementSubsystem managementSubsystem;
 
-  private final IntakeSubsystem intakeSubsystem;
+  /** Creates a new RunManagementReverseCommand. */
+  public RunManagementReverseCommand(ManagementSubsystem managementSubsystem) {
+    this.managementSubsystem = managementSubsystem;
 
-  public RunIntakeCmd(IntakeSubsystem intakeSubsystem) {
-    this.intakeSubsystem = intakeSubsystem;
-    addRequirements(intakeSubsystem);
+    this.addRequirements(managementSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.managementSubsystem.stop();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.setMotor(IntakeConstants.kSpeed);
+    this.managementSubsystem.set(ManagementConstants.kReverseSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.setMotor(0);
+    this.managementSubsystem.stop();
   }
 
   // Returns true when the command should end.
