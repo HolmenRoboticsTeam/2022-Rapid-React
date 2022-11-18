@@ -26,9 +26,11 @@ import frc.robot.commands.AngleShooterCmd;
 import frc.robot.commands.AutoDriveToTarget;
 import frc.robot.commands.RunClimberCmd;
 import frc.robot.commands.DriveCmd;
+import frc.robot.commands.ManualShooterAngle;
 import frc.robot.commands.RotateShooterCmd;
 import frc.robot.commands.AltRotateShooter;
 import frc.robot.commands.ShooterCmd;
+import frc.robot.commands.ZeroShooterAngle;
 import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.RunManagementCmd;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -44,14 +46,14 @@ public class RobotContainer {
 
   private final UsbCamera camera1 = CameraServer.startAutomaticCapture();
 
+  private final LimeLightSubsystem limelightSubsystem = new LimeLightSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ManagementSubsystem managementSubsystem = new ManagementSubsystem();
   private final ShooterFlywheelSubsystem shooterSubsystem = new ShooterFlywheelSubsystem();
-  private final ShooterAngleSubsystem shooterAngleSubsystem = new ShooterAngleSubsystem();
+  private final ShooterAngleSubsystem shooterAngleSubsystem = new ShooterAngleSubsystem(limelightSubsystem);
   private final ShooterRotationSubsystem shooterRotationSubsystem = new ShooterRotationSubsystem();
-  private final LimeLightSubsystem limelightSubsystem = new LimeLightSubsystem();
 
   private final Joystick leftHandedJoystick = new Joystick(OIConstants.kLeftHandedJoystickPort);
   private final Joystick rightHandedJoystick = new Joystick(OIConstants.kRightHandedJoystickPort);
@@ -87,9 +89,7 @@ public class RobotContainer {
     );
 
     shooterAngleSubsystem.setDefaultCommand(
-      new AngleShooterCmd(shooterAngleSubsystem, () -> limelightSubsystem.getDoubleTA(), leftHandedJoystick)
-    );
-    // climberSubsystem.setDefaultCommand(new RunClimberCmd(climberSubsystem, ClimberConstants.kExtendSpeed, leftHandedJoystick));
+      new SequentialCommandGroup(new WaitCommand(3), new AngleShooterCmd(shooterAngleSubsystem, () -> limelightSubsystem.shootingAngleNeededInMeters(), () -> limelightSubsystem.hasTarget())));
 
     camera1.setResolution(160, 120);
     camera1.setFPS(30);
@@ -131,6 +131,13 @@ public class RobotContainer {
     new JoystickButton(rightHandedJoystick, OIConstants.kManagementAndIntakeIdx)
         .whenHeld(new RunIntakeCmd(intakeSubsystem))
         .whenHeld(new RunManagementCmd(managementSubsystem, ManagementConstants.kSpeed));
+
+    new JoystickButton(rightHandedJoystick, OIConstants.kManualAngleButton)
+        .whenHeld(
+          new ManualShooterAngle(shooterAngleSubsystem, leftHandedJoystick));
+
+    new JoystickButton(leftHandedJoystick, OIConstants.kResetPositionButton)
+        .whenHeld(new ZeroShooterAngle(shooterAngleSubsystem, leftHandedJoystick));
   }
 
   /**

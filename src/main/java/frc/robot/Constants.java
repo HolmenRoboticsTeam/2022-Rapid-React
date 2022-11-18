@@ -72,6 +72,9 @@ public final class Constants {
         public static final int kClimberButtonDownIdx = 3; // right bottom button: LEFT JOYSTICK
 
         public static final int kRotationButtonIdx = 11; // for vertical shooter
+
+        public static final int kManualAngleButton = 2;
+        public static final int kResetPositionButton = 12;
     }
 
     public static final class ShooterConstants {
@@ -108,6 +111,12 @@ public final class Constants {
         public static final double kUnitsPerRotation = 0;
 
         public static final double kEntryAngle = Units.degreesToRadians(-69);  // Radians
+        public static final double kShooterAngleKP = 0.25;
+        public static final double kShooterAngleKI = 0;
+        public static final double kShooterAngleKD = 0;
+
+        public static final int kForwardSoftLimit = 900000;
+        public static final int kReverseSoftLimit = 0;
 
         // public static final double kShooterAngleKP = 0;
         // public static final double kShooterAngleKI = 0;

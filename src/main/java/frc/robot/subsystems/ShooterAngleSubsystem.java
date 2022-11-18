@@ -13,12 +13,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterAngleSubsystem extends SubsystemBase {
-  //private PIDController shooterAnglePID = new PIDController(ShooterConstants.kShooterAngleKP, ShooterConstants.kShooterAngleKI, ShooterConstants.kShooterAngleKD);
+  private PIDController shooterAnglePID = new PIDController(ShooterConstants.kShooterAngleKP, ShooterConstants.kShooterAngleKI, ShooterConstants.kShooterAngleKD);
   private WPI_TalonSRX shooterAngleMotor = new WPI_TalonSRX(ShooterConstants.kVerticalShooterMotorPort);
-
-  public ShooterAngleSubsystem() {
+  private LimeLightSubsystem limeLightSubsystem;
+  public ShooterAngleSubsystem(LimeLightSubsystem limeLightSubsystem) {
+    this.limeLightSubsystem = limeLightSubsystem;
     shooterAngleMotor.configFactoryDefault();
     shooterAngleMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    // shooterAngleMotor.configForwardSoftLimitEnable(true);
+    // shooterAngleMotor.configForwardSoftLimitThreshold(ShooterConstants.kForwardSoftLimit);
+    // shooterAngleMotor.configReverseSoftLimitEnable(true);
+    // shooterAngleMotor.configReverseSoftLimitThreshold(ShooterConstants.kReverseSoftLimit);
+    shooterAngleMotor.setSensorPhase(true);
     shooterAngleMotor.setSelectedSensorPosition(0);
   }
 
@@ -35,13 +41,20 @@ public class ShooterAngleSubsystem extends SubsystemBase {
   public void setMotor(double speed){
     shooterAngleMotor.set(speed);
   }
+  public void reset() {
+    shooterAngleMotor.setSelectedSensorPosition(0);
+  }
   public void setAngle(double angle){
     // get current angle (create a variable)
     // calculate (for PID object) 2 arguments -- current, target
     // call set motor using calculate output
-    // double currentAngle = getCurrentAngle();
-    // double output = shooterAnglePID.calculate(currentAngle, angle);
-    // setMotor(output);
+    if (limeLightSubsystem.getDistanceToTargetMeters() > 3.5) {
+      angle += 8;
+    }
+    double currentAngle = getCurrentAngle();
+    double output = shooterAnglePID.calculate(currentAngle, angle);
+    setMotor(output);
+    SmartDashboard.putNumber("angle required", angle);
   }
 
   public double getRawEncoderOutput() {

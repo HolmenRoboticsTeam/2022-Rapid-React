@@ -38,6 +38,13 @@ public class ShooterCmd extends ParallelCommandGroup {   // button type parallel
   @Override
   public void execute() {
     double velocityNeeded = limeLightSubsystem.exitVelocityNeededInMeters();
+    if (limeLightSubsystem.getDistanceToTargetMeters() < 3) {
+      velocityNeeded -= 3;
+    } else if (limeLightSubsystem.getDistanceToTargetMeters() >= 3.5) {
+      velocityNeeded -= 4;
+    } else {
+      velocityNeeded -= 1;
+    }
     shooterFlywheelSubsystem.setFrontMotorVelocity(velocityNeeded);
     shooterFlywheelSubsystem.setBackMotorVelocity(velocityNeeded);
     // System.out.println((this.stick.getRawAxis(3)));  // TODO: Remove

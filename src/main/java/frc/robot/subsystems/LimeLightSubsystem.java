@@ -30,7 +30,7 @@ public class LimeLightSubsystem extends SubsystemBase {
   }
 
   public double getDoubleTX() {
-    return (tx.getDouble(0.0));
+    return (tx.getDouble(0.0) - 1.0);
   }
 
   public double getDoubleTY() {
@@ -63,7 +63,7 @@ public class LimeLightSubsystem extends SubsystemBase {
   public double exitVelocityNeededInMeters() {
     double targetDistance = getDistanceToTargetMeters();
     double entryAngle = shootingAngleNeededInMeters();
-    return 1.5 * Math.sqrt(
+    return 2 * Math.sqrt(
       -(9.8 * Math.pow(targetDistance, 2) * (1 + Math.pow(Math.tan(entryAngle), 2))) / (2.0 * ShooterConstants.kHeightOfLimelightFromTarget - 2.0 * targetDistance * Math.tan(entryAngle))
     );
   }
@@ -75,6 +75,6 @@ public class LimeLightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("SHOOTER: VELOCITY NEEDED", exitVelocityNeededInMeters());
-    SmartDashboard.putNumber("SHOOTER: SHOOTING ANGLE NEEDED", Math.toDegrees(shootingAngleNeededInMeters()));
+    SmartDashboard.putNumber("SHOOTER: SHOOTING ANGLE NEEDED", 90 - Math.toDegrees(shootingAngleNeededInMeters()));
   } //
 }

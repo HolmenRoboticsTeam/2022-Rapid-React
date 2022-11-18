@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -19,13 +20,12 @@ public class AngleShooterCmd extends CommandBase {
   private final ShooterAngleSubsystem shooterAngleSubsystem;
   private PIDController pid = new PIDController(0.03, 0, 0.0005);
   private Supplier<Double> targetAngleSupplier;
+  private Supplier<Boolean> hasTargetSupplier;
 
-  Joystick stick;  // temporary
-
-  public AngleShooterCmd(ShooterAngleSubsystem shooterVerticalSubsystem, Supplier<Double> targetAngleSupplier, Joystick stick) {
+  public AngleShooterCmd(ShooterAngleSubsystem shooterVerticalSubsystem, Supplier<Double> targetAngleSupplier, Supplier<Boolean> hasTargetSupplier) {
     this.shooterAngleSubsystem = shooterVerticalSubsystem;
     this.targetAngleSupplier = targetAngleSupplier;
-    this.stick = stick;
+    this.hasTargetSupplier = hasTargetSupplier;
 
     this.pid.disableContinuousInput();
 
@@ -43,13 +43,12 @@ public class AngleShooterCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //SmartDashboard.putNumber("Angle", shooterAngleSubsystem.anglePerRotation());
-    // System.out.print("ANGLE: ");
-    // System.out.println(shooterAngleSubsystem.getCurrentAngle());
-    if (Math.abs(this.stick.getY()) > 0.5) {
-      shooterAngleSubsystem.setMotor(this.stick.getY());
+    if (hasTargetSupplier.get()) {
+      double angle = this.targetAngleSupplier.get();
+      angle = 90-Units.radiansToDegrees(angle);
+      this.shooterAngleSubsystem.setAngle(angle + 5);
     } else {
-      shooterAngleSubsystem.setMotor(0.0);
+      this.shooterAngleSubsystem.setMotor(0);
     }
   }
 
